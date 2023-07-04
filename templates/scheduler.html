@@ -1,0 +1,195 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    {% if running_id == None%}
+        <div class="form-scheduler" data-aos="fade-right">
+        
+        <h3 style="margin-top: 50px;" data-aos="fade-right">Penjadwalan</h3>
+        <p style="margin-top:-12px;font-size: 14px;" data-aos="fade-right">Membuat penjadwalan pengirman email</p>
+
+        <form method="POST" action="/scheduler/" onSubmit="return confirm('Input data?')" >
+            {% csrf_token %}
+            <div class="border-form">
+                <p style="font-size: 13px;">Pengirim email : {{ email_pengirim }} </p>  
+            </div>
+
+            <div id="border"></div>
+
+            <div class="form-boxScheduler">
+                <label for="#" style="font-size: 14px;">Pengiriman</label>
+                <select id="send-templates" name="periodic" onchange="getSelectValue();">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+
+                <div id="tanggal-pengiriman" class="form-tanggal">
+                    <div id="pengiriman">
+                        <label for="waktu_eksekusi" style="font-size: 14px;">Tanggal Pengriman</label><br>
+                        <input class = "form-dashboard" type="date" id="tanggal_dikiriemail_cabang" name="waktu_eksekusi"><br>
+                    </div>
+                </div>
+                
+                <div class="form-jam">
+                    <label for="jam_eksekusi" style="font-size: 14px;">Jam Pengiriman</label><br>
+                    <input class = "form-dashboard" type="time" id="jam_dikirim_submit" name="jam_eksekusi"><br>
+                </div>
+
+                <!-- <div>
+                    <label for="#" style="font-size: 14px;">Unit Kerja</label>
+                    <select class="form_mro_cabang" id="mro_cabang" name="jenis_uker">
+                        <option value="MRO">MRO</option>
+                        <option value="CABANG">CABANG</option>
+                    </select>
+                </div> -->
+
+                <div>
+                    <label for="#">Pilih template</label>
+                    <select id="choose-template" name="template" style="margin-bottom: 10px;">
+                        {% for a in template %}
+                            <option value='{{a.id_template}}'>{{a.nama_template}}</option>
+                        {%endfor%}
+                    </select>
+                    <!-- <a href="template-report/" class="add-templates">+ Konfigurasi template</a> -->
+                </div>
+
+                <div>
+                    <label for="#" style="font-size: 14px;">Format Pengiriman</label>
+                    <select id="format-pengiriman" name="format_template">
+                        <option value="pdf">Pdf</option>
+                        <!-- <option value="xls">Excel</option> -->
+                    </select>
+                </div>
+                
+                <label for="#" style="font-size: 14px;">Eksekusi</label>
+                <input type="checkbox" class="cb-aktif" name="status" >Aktif</input>
+                <!-- <input type="checkbox" class="cb-nonaktif">Pending</input> -->
+            </div>
+            <button type="submit" class="btn-submit">Submit</button>
+        </form>
+    {% else  %}
+        <div class="form-scheduler" data-aos="fade-right">
+        {%for running_id in running_id%}
+        <form  method="POST" action="/update_scheduler/{{ running_id.running_id }}" onSubmit="return confirm('Input data?')" >
+            <h3 style="margin-top: 50px;" data-aos="fade-right">Perbarui Penjadwalan</h3>
+            <p style="margin-top:-12px;font-size: 14px;" data-aos="fade-right">Perbarui penjadwalan pengirman email</p>
+
+            {% csrf_token %}
+            <div class="border-form">
+                <p style="font-size: 13px;">Pengirim email : adityaallaam123@gmail.com </p>    
+            </div>
+            <div id="border"></div>
+            <h5 style="color: rgb(82, 82, 82); font-style: italic;">Memperbarui penjadwalan dengan id : {{ running_id.running_id }}</h5>
+            <!-- <h5 style="color: rgb(82, 82, 82); font-style: italic;">Memperbarui penjadwalan dengan id : {{ running_id.template }}</h5> -->
+            <div class="form-boxScheduler">
+                <label for="#"  style="font-size: 14px;">Pengiriman:</label>
+                <select id="send-templates" name="periodic" onchange="getSelectValue();" value="{{running_id.periodic}}">
+                    {%if running_id.periodic == 'daily'%}
+                        <option value="daily" selected="selected">Daily</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    {%elif running_id.periodic == 'weekly'%}
+                        <option value="daily">Daily</option>
+                        <option value="weekly" selected="selected">weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    {%elif running_id.periodic == 'monthly'%}
+                        <option value="daily">Daily</option>
+                        <option value="monthly" selected="selected">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    {%elif running_id.periodic == 'yearly'%}
+                        <option value="daily">Daily</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly" selected="selected">Yearly</option>
+                    {%endif%}
+                </select>
+
+                {%if running_id.periodic == 'daily'%}
+
+                {%else%}
+                    <div>
+                        <div id="pengiriman">
+                            <label for="waktu_eksekusi" style="font-size: 14px;">Tanggal Pengriman</label><br>
+                            <input class = "form-dashboard" style="margin-left:60px;" type="date" id="tanggal_dikiriemail_cabang" name="waktu_eksekusi" value="{{running_id.waktu_eksekusi|date:"Y-m-d"}}"><br>
+                        </div>
+                    </div>
+                {%endif%}
+                            
+                <div class="form-jam">
+                    <label for="jam_eksekusi" style="font-size: 14px;">Jam Pengiriman</label><br>
+                    <input class = "form-dashboard" type="time" id="jam_dikirim" name="jam_eksekusi" value="{{running_id.jam_eksekusi|time:"h:i:s"}}"><br>
+                </div>
+      
+                <div>
+                    <label for="#">Pilih template:</label>
+                        <select id="choose-template" name="template" style="margin-bottom: 10px;">
+                            {% for a in template %}
+                                {%if running_id.id_template == a.id_template%}
+                                    <option value='{{a.id_template}}' selected>{{a.nama_template}}</option>
+                                {%else%}
+                                    <option value='{{a.id_template}}'>{{a.nama_template}}</option>
+                                {%endif%}
+                            {%endfor%}
+                        </select>
+                </div>
+                
+                <!-- <select id="choose-template" name="template">
+                    {%if running_id.template == 1%}
+                        <option value="1" selected="selected">Laporan Penjualan</option>
+                        <option value="2">Laporan Bulanan</option>
+                    {%elif running_id.template == 2%}
+                        <option value="1">Laporan Tahunan</option>
+                        <option value="2" selected="selected">Laporan Produktivitas Cabang</option>
+                    {%endif%}
+                </select> -->
+
+                <div>
+                    <label for="#" style="font-size: 14px;">Format Pengiriman</label>
+                    <select id="format-pengiriman" name="format_template" style="margin-left:55px;">
+                        {%if running_id.format_laporan == 'pdf'%}
+                            <option value="pdf" selected>Pdf</option>
+                            <option value="xls">Excel</option>
+                        {%else%}
+                            <option value="pdf">Pdf</option>
+                            <option value="xls" selected>Excel</option>
+                        {%endif%}
+                    </select>
+                </div>
+
+                <label for="#" style="font-size: 14px; margin-right: 68px;">Eksekusi</label>
+                {%if running_id.status == True%}
+                    <input type="checkbox" class="cb-aktif-update" name="status" checked>Aktif</input>
+                {%elif running_id.status == False%}
+                    <input type="checkbox" class="cb-aktif-update" name="status">Aktif</input>
+                {%endif%}
+                <!-- <input type="checkbox" class="cb-nonaktif">Pending</input> -->                
+            </div>
+            <button type="submit" class="btn-submit">Update</button>
+        </form>
+        {%endfor%}
+    {% endif %}
+    <script>
+        function getSelectValue(){
+            var selectedValue = document.getElementById("send-templates").value;
+            
+            if(selectedValue == "daily"){
+                console.log('daily')
+                $('#tanggal-pengiriman').removeClass('show')
+                $('#tanggal-pengiriman').addClass('form-tanggal')
+            } else if(selectedValue == 'monthly') {
+                console.log('monthly')
+                $('#tanggal-pengiriman').addClass('show')
+                $('#tanggal-pengiriman').removeClass('form-tanggal')
+            } else if(selectedValue == 'yearly') {
+                console.log('yearly')
+                $('#tanggal-pengiriman').addClass('show')
+                $('#tanggal-pengiriman').removeClass('form-tanggal')
+            } else {
+                console.log('selected')
+                $('#tanggal-pengiriman').addClass('show')
+                $('#tanggal-pengiriman').removeClass('form-tanggal')
+            }
+        }
+    </script>
+{% endblock %}

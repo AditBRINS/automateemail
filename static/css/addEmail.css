@@ -1,0 +1,92 @@
+.form-group-email {
+    display: flex;
+}
+
+input#email_penerima {
+    margin-left: 30px;
+    width: 300px;
+    height: 25px;
+    border-radius: 4px;
+    border: 1px solid gray;
+}
+
+.form-group-kode {
+    display: flex;
+}
+
+select#list_cabang {
+    margin-left: 45px;
+    height: 25px;
+    margin-top: 20px;
+    width: 304px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.form-group-nama {
+    display: flex;
+}
+
+input#nama_cabang {
+    margin-left: 38px;
+    margin-top: 20px;
+    width: 300px;
+    height: 25px;
+    border-radius: 4px;
+    border: 1px solid gray;
+}
+
+button.submit_email {
+    margin-top: 20px;
+    width: 510px;
+    height: 28px;
+    border: 1px solid;
+    border-radius: 7px;
+    background: #1658c0;
+    color: white;
+}
+
+button.submit_email:hover{
+    background: orange;
+    cursor: pointer;
+}
+
+.border-email {
+    border: 4px solid orange;
+    width: 504px;
+    border-radius: 7px;
+    box-shadow: 2px 2px #e4e4e4;
+}
+
+.div-flex {
+    display: flex;
+}
+
+/* .main-email{
+    opacity: 0;
+    display: none;
+    transition: opacity 0.5s ease-in;
+} */
+
+input#list_cabang {
+    margin-top: 20px;
+    height: 25px;
+    margin-left: 45px;
+    width: 301px;
+    border-radius: 4px;
+    border: 1px solid gray;
+}
+
+div#msg-addEmail {
+    background: orange;
+    margin-top: -39px;
+    padding: 12px;
+    text-align: center;
+    margin-left: 469px;
+    font-size: 13px;
+    color: white;
+    border-radius: 7px;
+    width: 370px;
+    text-shadow: 1px 1px #a3a3a3;
+    box-shadow: 1px 1px #ececec;
+}

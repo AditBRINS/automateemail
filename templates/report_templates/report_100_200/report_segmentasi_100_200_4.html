@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            body {
+                font-weight: 100;
+                font-size: 12px;
+            }
+
+            .body-informasi{
+                position: relative;
+                margin:0 auto; 
+            }
+            
+            .header{
+                width: 100%;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #000000;
+            }
+
+            .hrItem {
+                border: none;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+
+            .footer { 
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .custom-page-start {
+                margin-top: 50px;
+            }
+
+            @page {
+                margin : 1cm 1cm 0cm 1cm;
+                size: 35cm 30cm;
+            }
+
+            .site-footer {
+                background: orange;
+            }
+
+            .footer{
+                position:absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            .box {
+                display: flex;
+                justify-content: space-between;
+            }
+        </style>
+    </head>
+    <body>
+        <h6>KONVENSIONAL</h6>        
+        <div class="body-informasi">    
+            <table id="table-info">
+                <thead>
+                    <tr style="background: rgb(3, 15, 119);color: white;">
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">UNIT KERJA</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">WHOLESALE</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">SYARIAH</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">DIGITAL</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">RITEL CAPTIVE</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">MIKRO CAPTIVE</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">RITEL NON CAPTIVE</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">MIKRO NON CAPTIVE</td>
+                        <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">TOTAL</td>
+                    </tr>
+                </thead>
+                {% for a in segmentasi_kinerja%}
+                {%load humanize%}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">{{a.nama_cabang}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.wholesale | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.syariah | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.digital | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.ritel_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.mikro_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.ritel_non_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.mikro_non_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.premi_total | floatformat:0 | intcomma}}</td>
+                    </tr>
+                </tbody>
+                {%endfor%}
+            </table>
+        
+            <hr class='hrItem' />
+        </div>
+
+        <div class="content-block" style="margin-bottom: 3px;">
+            <table style="background-color: rgb(236, 236, 236);">
+                {% for a in sum_segmentasi_kinerja%}
+                {%load humanize%}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">TOTAL</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.wholesale | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.syariah | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.digital | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.ritel_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.mikro_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.ritel_non_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.mikro_non_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.premi_total | floatformat:0 | intcomma}}</td>
+                    </tr>
+                </tbody>
+                {%endfor%}
+            </table>
+        </div>
+
+        <h6>SYARIAH</h6>  
+        <table id="table-info">
+            <thead>
+                <tr style="background: rgb(3, 15, 119);color: white;">
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">UNIT KERJA</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">WHOLESALE</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">SYARIAH</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">DIGITAL</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">RITEL CAPTIVE</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">MIKRO CAPTIVE</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">RITEL NON CAPTIVE</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">MIKRO NON CAPTIVE</td>
+                    <td style="text-align: center;font-weight: bold;padding: 5px 0px 5px 0px;font-size: 9px;">TOTAL</td>
+                </tr>
+            </thead>
+           
+            {% for a in segmentasi_kinerja_2%}
+            {%load humanize%}
+            <tbody style="margin-top: 10px;">
+                <tr>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">{{a.nama_cabang}}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.wholesale | floatformat:0 |intcomma}}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.syariah | floatformat:0 |intcomma}}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. {{a.digital | floatformat:0 |intcomma}}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. 0</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. 0</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. 0</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. 0</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 9px;">Rp. 0</td>
+                </tr>
+            </tbody>
+            {%endfor%}
+        </table>
+        <hr class='hrItem' />
+
+        <div class="content-block" style="margin-bottom: 3px;">
+            <table style="background-color: rgb(236, 236, 236);">
+                {% for a in sum_segmentasi_kinerja_2%}
+                {%load humanize%}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">TOTAL</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.syariah | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. 0</td>
+                    </tr>
+                </tbody>
+                {%endfor%}
+            </table>
+        </div>
+
+        <hr class='hrItem' />
+
+        <div class="content-block" style="margin-bottom: 3px;">
+            <table style="background-color: rgb(236, 236, 236);">
+                {% for a in sum_segmentasi_kinerja_3%}
+                {%load humanize%}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">TOTAL KESELURUAHN</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.wholesale | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.syariah | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.digital | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.ritel_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.mikro_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.ritel_non_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.mikro_non_captive | floatformat:0 |intcomma}}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 9px;font-weight: bold;">Rp. {{a.premi_total | floatformat:0 | intcomma}}</td>
+                    </tr>
+                </tbody>
+                {%endfor%}
+            </table>
+        </div>
+
+        <!-- <table id="table-info">
+            <thead>
+                <tr style="background: rgb(3, 15, 119);color: white;">
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">TANGGAL</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">WHOLESALE</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">SYARIAH</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">DIGITAL</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">RITEL</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">MIKRO</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">RITEL MIKRO</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">PREMI TOTAL</td>
+                </tr>
+            </thead>
+            {% load humanize %}
+            <tbody>
+                <tr>
+                    <td style="text-align:center;padding-top:5px;"> {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_wholesale |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_syariah |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_digital |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_ritel |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_mikro |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_ritel_mikro |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ sum_premi_total |floatformat:0 |  intcomma  }}</td>
+                </tr>
+            </tbody>
+        </table> -->
+
+        </table>
+    </body>
+</html>
+
+
+

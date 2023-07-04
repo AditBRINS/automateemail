@@ -1,0 +1,53 @@
+<div style="width: 200px;margin-bottom: 20px;page-break-before: always;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    <div>
+        Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}<br/>
+        Laporan Dikirim : {{ today }}<br/>
+        Format Lampiran : {{ judul_format }}<br/>
+    </div>
+</div>
+
+<hr class='hrItem' />
+
+<div>
+    {%for a in segmentasi_kinerja%}
+    {%if a.branch == cabang%}
+        {%if a.premi_total == None %}
+            <h6>data kosong</h6>
+        {%else%}
+            <!-- <h6>Rp.{{ a.premi_total }}</h6> -->
+            <image src="C:/Users/adity/Documents/Kuliah/Program Magang/automateemail/image/Premi_Total.png" ></image>
+        {%endif%}
+    {%endif%}
+    {%endfor%}
+</div>
+
+<div style="margin-left:550px;padding-top:-230px;">
+    {%for a in segmentasi_kinerja%}
+    {%if a.branch == cabang%}
+        {%if a.premi_total == None %}
+            <h6>data kosong</h6>
+        {%else%}
+            <!-- <h6>Rp.{{ a.premi_total }}</h6> -->
+            <image src="C:/Users/adity/Documents/Kuliah/Program Magang/automateemail/image/Premi_Total_CnC.png" ></image>
+        {%endif%}
+    {%endif%}
+    {%endfor%}
+</div>
+
+<div style="padding-top:80px;">
+    {%for a in segmentasi_kinerja%}
+    {%if a.branch == cabang%}
+    {%if a.premi_total == None %}
+        <h6>data kosong</h6>
+    {%else%}
+        <!-- <h6>Rp.{{ a.premi_total }}</h6> -->
+        <image src="C:/Users/adity/Documents/Kuliah/Program Magang/automateemail/image/Premi_Total_Sourcename.png" ></image>
+    {%endif%}
+    {%endif%}
+    {%endfor%}
+</div>
+

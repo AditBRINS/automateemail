@@ -1,0 +1,149 @@
+<div class="body-informasi">
+    <h6>Laporan Produksi Segmentasi</h6>
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                <th scope="col" style="color:white">Tanggal</th>
+                <th scope="col" style="color:white">WholeSale</th>
+                <th scope="col" style="color:white">Mikro</th>
+                <th scope="col" style="color:white">Ritel</th>
+                <th scope="col" style="color:white">Ritel Mikro</th>
+                <th scope="col" style="color:white">Digital</th>
+                <th scope="col" style="color:white">Syariah</th>
+                <th scope="col" style="color:white">Total</th>
+            </tr>
+        </thead>
+        {% load humanize %}
+        <tbody>
+            <tr>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_wholesale |floatformat:0  | intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_mikro |floatformat:0 |  intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_ritel |floatformat:0 |  intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_ritel_mikro |floatformat:0 |  intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_digital|floatformat:0  | intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_syariah|floatformat:0  | intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_premi_total|floatformat:0  | intcomma }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr class='hrItem' />
+
+    {%if periodic == 'yearly'%}
+    <table>
+        <tr>
+            <td style="text-align: center;font-weight: bold;font-size: 10px;">Target</td>
+            {%for a in target_pusat%}
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.wholesale |floatformat:0  | intcomma }}</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.mikro |floatformat:0  | intcomma }}</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.ritel |floatformat:0  | intcomma }}</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.ritel_mikro |floatformat:0  | intcomma }}</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.digital |floatformat:0  | intcomma }}</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.syariah |floatformat:0  | intcomma }}</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">Rp. {{ a.premi_total |floatformat:0  | intcomma }}</td>
+            {%endfor%}
+        </tr>
+    </table>
+
+    <hr class="hrItem"/>
+
+    <table style="background-color: rgb(240, 240, 240);padding: 3px;">
+        <tr>
+            <td style="text-align: center;font-weight: bold;font-size: 10px;">Persentase Target</td>
+            {%for a in persentase_pusat%}
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_wholesale |floatformat:2  | intcomma }} %</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_mikro |floatformat:2  | intcomma }} %</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_ritel |floatformat:2  | intcomma }} %</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_ritel_mikro |floatformat:2  | intcomma }} %</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_digital |floatformat:2  | intcomma }} %</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_syariah |floatformat:2  | intcomma }} %</td>
+                <td style="text-align: center;font-weight: bold;font-size: 10px;">{{ a.persen_premi_total |floatformat:2  | intcomma }} %</td>
+            {%endfor%}
+        </tr>
+    </table>
+    {%endif%}
+
+    <h6>Laporan Premi Brisurf Non Brisurf</h6>
+    <div>
+        <table id="table-info">
+            <thead>
+                <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                    <th scope="col" style="color:white">Tanggal</th>
+                    <th scope="col" style="color:white">Kategori</th>
+                    <th scope="col" style="color:white">Premi</th>
+                </tr>
+            </thead>
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Premi BRISURF</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_brisurf | floatformat:2 | intcomma }}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Premi NON BRISURF</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_non_brisurf | floatformat:2 | intcomma }}</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+
+    <hr class='hrItem' />
+
+    <h6>Laporan Premi Captive Non Captive</h6>
+
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                <th scope="col" style="color:white">Tanggal</th>
+                <th scope="col" style="color:white">Segmentasi</th>
+                <th scope="col" style="color:white">Premi</th>
+            </tr>
+        </thead>
+        {% load humanize %}
+            <tbody style="margin-top: 10px;">
+                <tr>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">POS BRI</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_cnc_bri | floatformat:0 | intcomma }}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">POS UMUM</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_cnc_umum | floatformat:0 | intcomma }}</td>
+                </tr>
+            </tbody>
+    </table>
+
+    <hr class='hrItem' />
+
+    <h6>Laporan Premi OS</h6>
+
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                <th scope="col" style="color:white">Tanggal</th>
+                <th scope="col" style="color:white">Nilai OS</th>
+            </tr>
+        </thead>
+        {% load humanize %}
+        <tbody>
+            <tr>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sum_os | floatformat:0 | intcomma }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table>
+        <tr style="border: 1px solid white;color: white;">
+            <td>
+                Bagian 1
+            </td>
+        </tr>
+    </table>
+    
+</div>

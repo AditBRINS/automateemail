@@ -1,0 +1,104 @@
+<div style="width: 150px;margin-bottom: 20px;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    {%if jenis_uker == 'MRO'%}
+        {%for a in mro_detail_bulanan%}
+        {%if cabang == a.kode_mro%}
+            <table>
+                <tr style="padding-top: 1px;">
+                    <td>Id Report : {{ running_id }}</td>
+                    <td>Kode Cabang: {{ cabang }} - {{ a.nama_mro }} / {{ jenis_uker }}</td>
+                    <td>Laporan Dikirim : {{ today }}</td>
+                </tr>
+
+                <tr style="padding-top: 1px;">
+                    <td>Email Penerima : {{ email_penerima }}</td>
+                    <td>Format Lampiran : {%if judul_format == 'tahunan_detail'%} <b>Tahunan</b> {%elif judul_format == 'bulanan'%} <b>Bulanan</b> {%elif judul_format == 'mingguan'%} <b>Mingguan</b> {%else%} <b>Harian</b> {%endif%} - <b>Report Klaim</b></td>
+                    <td>Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                </tr>
+            </table>
+        {%endif%}
+        {%endfor%}
+    {%endif%}
+</div>
+
+<hr class='hrItem' />
+
+<h6>Report Klaim</h6>
+
+<div>
+    <table>
+        <thead>
+            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                <th scope="col" style="color:white;">Tanggal</th>
+                <th scope="col" style="color:white;">Klaim Settled</th>
+            </tr>
+        </thead>
+        {% if judul_format == 'tahunan_detail'%}
+            {%for a in klaim_cabang_perbulan %}
+            {%if a.Branch == cabang%}
+            {% load humanize %}
+            <tbody>
+                <tr>
+                    <td style="text-align:center;padding-top:5px;">{{a.month |date:"M/Y"}}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.Nilai_Klaim |floatformat:0 |  intcomma }}</td>
+                </tr>
+            </tbody>
+            {%endif%}
+            {%endfor%}
+        {% elif judul_format == 'bulanan'%}
+            {%for a in klaim_cabang_perminggu %}
+            {%if a.Branch == cabang%}
+            {% load humanize %}
+                <tbody>
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;">
+                        {% if a.week == sum_week_klaim %}
+                            {{ startdate_weekly_klaim | date:"d, b / Y" }} - {{ enddate_weekly_klaim | date:"d, b / Y" }}
+                        {%elif a.week == sum_week_klaim_2 %}
+                            {{ startdate_weekly_klaim_2 | date:"d, b / Y" }} - {{ enddate_weekly_klaim_2 | date:"d, b / Y" }}
+                        {%elif a.week == sum_week_klaim_3%}
+                            {{ startdate_weekly_klaim_3 | date:"d, b / Y" }} - {{ enddate_weekly_klaim_3 | date:"d, b / Y" }}
+                        {%elif a.week == sum_week_klaim_4%}
+                            {{ startdate_weekly_klaim_4 | date:"d, b / Y" }} - {{ enddate_weekly_klaim_4 | date:"d, b / Y" }}
+                        {%elif a.week == sum_week_klaim_5%}
+                            {{ startdate_weekly_klaim_5 | date:"d, b / Y" }} - {{ enddate_weekly_klaim_5 | date:"d, b / Y" }}
+                        {%else%}
+                            -
+                        {%endif%}
+                        </td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.Nilai_Klaim |floatformat:0 |  intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%else%}
+            {%for a in klaim_cabang %}
+            {%if a.Branch == cabang%}
+            {% load humanize %}
+            <tbody>
+                <tr>
+                    <td style="text-align:center;padding-top:5px;">{{ a.Tanggal }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.Nilai_Klaim |floatformat:0 |  intcomma }}</td>
+                </tr>
+            </tbody>
+            {%endif%}
+            {%endfor%}
+        {%endif%}
+    </table>
+</div>
+
+<div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+    {% for a in klaim_cabang_total %}
+    {% if a.Branch == cabang %}
+    {% load humanize %}
+        <h6>Total Nilai Klaim : Rp.{{ a.Nilai_Klaim|floatformat:0 |intcomma }}</h6>   
+    {%endif%}
+    {%endfor%}
+</div>
+
+<div>
+    <pdf:nextpage /> 
+</div>

@@ -1,0 +1,134 @@
+<div style="width: 200px;margin-bottom: 20px;page-break-before: always;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    <div>
+        Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}<br/>
+        Laporan Dikirim : {{ today }}<br/>
+        Format Lampiran : {{ judul_format }}<br/>
+    </div>
+</div>
+
+<hr class='hrItem' />
+
+<table style="border: 1px solid black;">
+    <tr>
+        <td>
+            <div>
+                {%for a in segmentasi_kinerja%}
+                {%if a.branch == cabang%}
+                    {%if a.premi_total == None %}
+                        <h6>data kosong</h6>
+                    {%else%}
+                        <image src="C:/Users/HP/Documents/automateemail/image/data_segmentasi.png" ></image>
+                    {%endif%}
+                {%endif%}
+                {%endfor%}
+            </div>
+        </td>
+        <td>
+            <h1><b>Premi Brisurf Non Brisurf</b></h1>
+            <table>
+                <tr>
+                    <td>
+                        {%for a in brisurf_report%}
+                        {%if a.BRANCH == cabang%}
+                        {%if a.kategori == 'Brisurf'%}
+                        {%load humanize%}
+                            <div>
+                                <h2 style="background: #00529C; text-align: center;color: white; border: 5px solid #00529C;margin-right: 25px;">Premi Brisurf</h2>
+                                <h3 style="color: #F36F21;font-size: 20px; text-align: center;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</h3>
+                            </div>
+                        {%endif%}
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                    <td>
+                        <div>
+                            <h2 style="background: #00529C; text-align: center;color: white; border: 5px solid #00529C;">Premi Non Brisurf</h2>
+                            {%for a in brisurf_report%}
+                            {%if a.BRANCH == cabang%}
+                            {%if a.kategori == 'Non Brisurf'%}
+                            {%load humanize%}
+                                <h4 style="color: #F36F21;font-size: 20px; text-align: center;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</h5>
+                            {%endif%}
+                            {%endif%}
+                            {%endfor%}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <h2><b>Premi Captive Non Captive</b></h4>
+            <table>
+                <tr>
+                    <td>
+                        {% for a in cnc_report %}
+                        {% if a.branch == cabang %}
+                        {% if a.captive_non_captive == 'POS BRI'%}
+                        {% load humanize %}
+                            <div>
+                                <h3 style="background: #00529C; text-align: center;color: white; border: 5px solid #00529C;margin-right: 25px;">Premi POS BRI</h3>
+                                <h4 style="color: #F36F21;font-size: 20px; text-align: center;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</h5>
+                            </div>
+                        {%endif%}
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                    <td>
+                        {% for a in cnc_report %}
+                        {% if a.branch == cabang %}
+                        {% if a.captive_non_captive == 'POS UMUM'%}
+                        {% load humanize %}
+                            <div>
+                                <h3 style="background: #00529C; text-align: center;color: white; border: 5px solid #00529C;margin-right: 25px;">Premi POS UMUM</h3>
+                                <h3 style="color: #F36F21;font-size: 20px; text-align: center;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</h3>
+                            </div>
+                        {%endif%}
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table style="border: 1px solid black;">
+    <tr>
+        <td>
+            <h4 style="font-size: 15px;">Informasi Detail Premi Segmentasi,</h4>
+            <h4>Wholesale : </h4>
+            <h4>Ritel : </h4>
+            <h4>Mikro : </h4>
+            <h4>Ritel Mikro : </h4>
+            <h4>Digital : </h4>
+            <h4>Syariah : </h4>
+        </td>
+    </tr>
+</table>
+
+<div style="margin-left:550px;padding-top:-230px;">
+    {%for a in segmentasi_kinerja%}
+    {%if a.branch == cabang%}
+        {%if a.premi_total == None %}
+            <h6>data kosong</h6>
+        {%else%}
+          
+        {%endif%}
+    {%endif%}
+    {%endfor%}
+</div>
+
+<div style="padding-top:80px;">
+    {%for a in segmentasi_kinerja%}
+    {%if a.branch == cabang%}
+    {%if a.premi_total == None %}
+        <h6>data kosong</h6>
+    {%else%}
+    
+    {%endif%}
+    {%endif%}
+    {%endfor%}
+</div>
+

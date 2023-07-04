@@ -1,0 +1,34 @@
+<div style="width: 200px;margin-bottom: 20px;page-break-before: always;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    <div>
+        Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}<br/>
+        Laporan Dikirim : {{ today }}<br/>
+        Format Lampiran : {{ judul_format }}<br/>
+    </div>
+</div>
+
+<hr class='hrItem' />
+
+<div>    
+    <image src="C:/Users/adity/Documents/Kuliah/Program Magang/automateemail/image/produktivitas_cabang/Premi_Total.png" ></image>
+</div>
+
+<!-- <div>    
+    <image src="C:/Users/adity/Documents/Kuliah/Program Magang/automateemail/image/produktivitas_cabang/Premi_Total_Segmentasi.png" ></image>
+</div> -->
+
+
+<!-- <div style="margin-left:550px;margin-top:300px;">
+    {%for a in transaksi_cabang%}
+    {% load l10n %}
+        {%if a.total_premi == None %}
+            <h6>data kosong</h6>
+        {%else%}
+            <h6>Cabang : {{ a.branch }}, dengan Premi Total Rp.{{ a.total_premi|localize }}</h6>
+        {%endif%}
+    {%endfor%}
+</div> -->
+

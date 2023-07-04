@@ -1,0 +1,154 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    {%if messages%}
+    {%for msg in messages%}
+        <div class="alert alert-{{ msg.tags }} m-2" id="msg-add" role="alert" data-aos="fade-down">
+            {{ msg }}
+        </div>
+    {%endfor%}
+    {%endif%}
+
+    <h3 class="title-dashboard">Dashboard</h3>
+    <p class="desc-dashboard">Membuat laporan pengiriman email otomatis</p>
+
+    <button id="btn-adding-action">
+        <a href="/form" id="adding-action">+ Buat Penjadwalan Email</a>
+    </button>
+
+    <div class = "status-pengiriman">
+        <table class="table">
+            <thead>
+                <tr class="border-bottom">
+                    <th scope="col" class="header-table">No</th>
+                    <th scope="col" class="header-table">Period</th>
+                    <!-- <th scope="col" class="header-table">Tanggal Laporan</th> -->
+                    <!-- <th scope="col" class="header-table">Jam</th> -->
+                    <th scope="col" class="header-table" style="width:180px;">Waktu Eksekusi</th>
+                    <!-- <th scope="col" class="header-table">Running ID</th> -->
+                    <!-- <th scope="col" class="header-table">Email Penerima</th> -->
+                    <th scope="col" class="header-table">Status</th>
+                    <th scope="col" class="header-table">Format</th>
+                    <th scope="col" class="header-table">Action</th>
+                    <th scope="col" class="header-table">Action</th>
+                    <th scope="col" class="header-table" style="width:100px;">Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for schedule in schedule%}
+                <tr class="border-table">
+                    <td class="text-table">{{ schedule.running_id }}</td>
+                    <!-- <td class="text-table">Daily</td> -->
+                    <td class="text-table">{{ schedule.periodic }}</td>
+                    <!-- <td class="text-table">{{ start_day_of_prev_month }}-{{ last_day_of_prev_month }}</td> -->
+                    <!-- <td class="text-table">{{ schedule.waktu_eksekusi | date:"M d" }}</td> -->
+                    <td class="text-table" style="width:120px;">
+                        {%if schedule.periodic == "monthly" %}
+                            {{ schedule.waktu_eksekusi | date:"M d, Y" }} - {{ schedule.jam_eksekusi }}
+                        {%elif schedule.periodic == "weekly" %}
+                            {{ schedule.waktu_eksekusi | date:"M d, Y" }} - {{ schedule.jam_eksekusi }}
+                        {%elif schedule.periodic == "yearly" %}
+                            {{ schedule.waktu_eksekusi | date:"M d, Y" }} -  {{ schedule.jam_eksekusi }}
+                        {%elif schedule.periodic == "daily" %}
+                        <!-- <p id="current_date"></p> -->
+                            {{ today | date:"M d, Y" }} - {{ schedule.jam_eksekusi }}
+                        {% endif %}
+                    </td>
+                    <!-- <td class="text-table">{{ schedule.running_id }}</td> -->
+                    <!-- <td class="text-table">{{ schedule.email_penerima }}</td> -->
+                    <td>
+                        <div id="switch-btn">
+                            {%if schedule.status == 1%}
+                            <a href="/status_update_on/{{ schedule.running_id }}" class = "btn_onoff">
+                                <button id ='id_status_on' class="status_on">Aktif</button>
+                            </a>
+                            <a href="/status_update_off/{{ schedule.running_id }}">
+                                <button class="status_off">Pending</button>
+                            </a>
+                            {%else%}
+                            <a href="/status_update_on/{{ schedule.running_id}}" class = "btn_onoff">
+                                <button class="status_on">Aktif</button>
+                            </a>
+                            <a href="/status_update_off/{{ schedule.running_id}}">
+                                <button id='id_status_off' class="btn btn-danger status_off">Pending</button>
+                            </a>
+                            {% endif%}
+                        </div>
+                    </td>
+                    
+                    <td class="text-table">
+                        {%for a in template %}
+                            {%if a.id_template == schedule.id_template%}
+                                {{ a.nama_template }}
+                            {%endif%}
+                        {%endfor%}
+                        <!-- {{ schedule.id_template.nama_template }} -->
+                        <!-- {%if schedule.template == 1%}
+                            Penjualan
+                        {%else%}q
+                            Produktivitas Cabang
+                        {%endif%} -->
+                    </td>
+                    <td class="text-table">
+                        <a href="/update/{{ schedule.running_id }}">
+                            <button class="btn-update">Perbarui</button>
+                        </a>
+                    </td>
+                    <td class="text-table">
+                        <a href="/delete/{{ schedule.running_id}}">
+                            <button class="btn-delete" onclick="return confirm('Apakah job dengan id : {{ schedule.running_id }}, akan dihapus ?')">Hapus</button>
+                        </a>
+                    </td>
+                    <td class="text-table"><a href="/detail-scheduler/{{ schedule.running_id}}" style="text-decoration: none; color: gray;" class="detail">Lihat Detail</a></td>
+                </tr>
+            </tbody>
+                {%endfor%}
+        </table>
+    </div> 
+
+    <script>
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        date = new Date();
+        year = date.getFullYear();
+        month = monthNames[date.getMonth()]
+        day = date.getDate();
+        document.getElementById("current_date").innerHTML = day + " " + month + " " + year;
+    </script>
+
+    <div class="pagination" style="margin-left:0px;" >
+        <span class="step-links">
+            {% if schedule.has_previous %}
+                <a href="?page=1" class="num-pag">&laquo; first</a>
+                <a href="?page={{ schedule.previous_page_number }}" class="num-pag">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Laman {{ schedule.number }} dari {{ schedule.paginator.num_pages }}.
+            </span>
+
+            {% if schedule.has_next %}
+                <a href="?page={{ schedule.next_page_number }}" class="num-pag">next</a>
+                <a href="?page={{ schedule.paginator.num_pages }}" class="num-pag">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="report-info" data-aos="fade-up">
+        <h3 class = "title-dashboard">Informasi</h3>
+        <p class="desc-dashboard">Informasi jumlah status pengiriman email</p>
+        <div class="box-info">
+            <div class="square-right">
+                <p class = "title-info">Email Aktif</p>
+                <div class="border"></div>                
+                <h1 style="text-align: center;color:white;">{{ obj_true }}</h1>
+            </div>
+            <div class="square-left">
+                <p class = "title-info">Email Pending</p>
+                <div class="border"></div>  
+                <h1 style="text-align: center;color:white;">{{ obj_false }}</h1>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

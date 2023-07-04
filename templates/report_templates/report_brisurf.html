@@ -1,0 +1,350 @@
+<div style="width: 150px;margin-bottom: 20px;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+{%for a in nama_cabang_mro%}
+{% if a.kode_mro == cabang %}
+<table>
+    <tr style="padding-top: 1px;">
+        <td>Id Report : {{ running_id }}</td>
+        <td>Kode Cabang : {{ cabang }} - {{ a.nama_cabang }}</td>
+        <td>Laporan Dikirim : {{ today }}</td>
+    </tr>
+
+    <tr style="padding-top: 1px;">
+        <td>Email Penerima : {{ email_penerima }}</td>
+        <td>Format Lampiran : {%if judul_format == 'tahunan_detail'%} <b>Tahunan</b> {%elif judul_format == 'bulanan'%} <b>Bulanan</b>  {%elif judul_format == 'mingguan'%} <b>Mingguan</b> {%else%} <b>Harian</b> {%endif%} - <b>Report Brisurf</b></td>
+        <td>Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+    </tr>
+</table>
+{%endif%}
+{%endfor%}
+
+
+<hr class='hrItem' />
+
+<div>
+    <table>
+        <tr>
+            <td style="vertical-align: top;">
+                <h6>Kategori BRISURF</h6>
+                <table id="table-info">
+                    <thead>
+                        <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                            {%if judul_format == 'tahunan_detail'%}
+                                <th scope="col" style="color:white">Bulan</th>
+                            {%else%}
+                                <th scope="col" style="color:white">Tanggal</th>
+                            {%endif%}
+                            <th scope="col" style="color:white; border-right:10px solid white ;">Premi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if judul_format == 'mingguan'%}
+                            {% for a in brisurf_harian %}
+                            {% if a.BRANCH == cabang %}
+                            {% load humanize %}
+                                <tbody style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">{{ a.date }}</td>
+                                        <td style="text-align:center;padding-top:5px;">Rp.{{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                    </tr>
+                                </tbody>
+                            {%endif%}
+                            {%endfor%}
+                        {% elif judul_format == 'bulanan'%}
+                            {% for a in brisurf_mingguan %}
+                            {% if a.BRANCH == cabang %}
+                            {% load humanize %}
+                                <tbody style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">
+                                            {% if a.week == sum_week_brisurf %}
+                                                {{ enddate | date:"d, b / Y" }} - {{ enddate_weekly_brisurf | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_brisurf_2 %}
+                                                {{ startdate_weekly_brisurf_2 | date:"d, b / Y" }} - {{ enddate_weekly_brisurf_2 | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_brisurf_3%}
+                                                {{ startdate_weekly_brisurf_3 | date:"d, b / Y" }} - {{ enddate_weekly_brisurf_3 | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_brisurf_4%}
+                                                {{ startdate_weekly_brisurf_4 | date:"d, b / Y" }} - {{ enddate_weekly_brisurf_4 | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_brisurf_5%}
+                                                {{ startdate_weekly_brisurf_5 | date:"d, b / Y" }} - {{ enddate_weekly_brisurf_5 | date:"d, b / Y" }}
+                                            {%else%}
+                                                -
+                                            {%endif%}
+                                        </td>
+                                        {% if a.week == sum_week_brisurf %}
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                        {%elif a.week == sum_week_brisurf_2 %}
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                        {%else%}
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                        {%endif%}
+                                    </tr>
+                                </tbody>
+                            {%endif%}
+                            {%endfor%}
+                        {%elif judul_format == 'tahunan_detail' %}
+                            {% for a in brisurf_tahunan %}
+                            {% if a.BRANCH == cabang %}
+                            {% load humanize %}
+                                <tbody style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                    </tr>
+                                </tbody>
+                            {%endif%}
+                            {%endfor%}
+                        {%else%}
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                </tr>
+                        {%endif%}
+                    </tbody>
+                </table>
+                <div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+                    {% for a in sum_brisurf_tahunan %}
+                    {% if a.BRANCH == cabang %}
+                    {% load humanize %}
+                        <h6>Total Premi BRISURF : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+                    {%endif%}
+                    {%endfor%}
+                </div>
+            </td>
+            <td style="vertical-align: top;">
+                <h6>Kategori NON BRISURF</h6>
+                <table>
+                    <thead>
+                        <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                            {%if judul_format == 'tahunan_detail'%}
+                                <th scope="col" style="color:white">Bulan</th>
+                            {%else%}
+                                <th scope="col" style="color:white">Tanggal</th>
+                            {%endif%}
+                            <th scope="col" style="color:white;font-weight: bold;">Premi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if judul_format == 'mingguan'%}
+                            {% for a in non_brisurf_harian %}
+                            {% if a.BRANCH == cabang %}
+                            {% load humanize %}
+                                <tbody style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">{{ a.date }}</td>
+                                        <td style="text-align:center;padding-top:5px;">Rp.{{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                    </tr>
+                                </tbody>
+                            {%endif%}
+                            {%endfor%}
+                        {% elif judul_format == 'bulanan'%}
+                            {% for a in non_brisurf_mingguan %}
+                            {% if a.BRANCH == cabang %}
+                            {% load humanize %}
+                                <tbody style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">
+                                            {% if a.week == sum_week_non_brisurf %}
+                                                {{ startdate_weekly_non_brisurf | date:"d, b / Y" }} - {{ enddate_weekly_non_brisurf | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_non_brisurf_2 %}
+                                                {{ startdate_weekly_non_brisurf_2 | date:"d, b / Y" }} - {{ enddate_weekly_non_brisurf_2 | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_non_brisurf_3%}
+                                                {{ startdate_weekly_non_brisurf_3 | date:"d, b / Y" }} - {{ enddate_weekly_non_brisurf_3 | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_non_brisurf_4%}
+                                                {{ startdate_weekly_non_brisurf_4 | date:"d, b / Y" }} - {{ enddate_weekly_non_brisurf_4 | date:"d, b / Y" }}
+                                            {%elif a.week == sum_week_non_brisurf_5%}
+                                                {{ startdate_weekly_non_brisurf_5 | date:"d, b / Y" }} - {{ enddate_weekly_non_brisurf_5 | date:"d, b / Y" }}
+                                            {%else%}
+                                                -
+                                            {%endif%}
+                                        </td>
+                                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                    </tr>
+                                </tbody>
+                            {%endif%}
+                            {%endfor%}
+                        {%elif judul_format == 'tahunan_detail' %}
+                            {% for a in non_brisurf_tahunan %}
+                            {% if a.BRANCH == cabang %}
+                            {% load humanize %}
+                                <tbody style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                    </tr>
+                                </tbody>
+                            {%endif%}
+                            {%endfor%}
+                        {%else%}
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                </tr>
+                        {%endif%}
+                    </tbody>
+                </table>
+                <div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;border-left: 4px solid white;">
+                    {% for a in sum_non_brisurf_tahunan %}
+                    {% if a.BRANCH == cabang %}
+                    {% load humanize %}
+                        <h6>Total Premi NON BRISURF : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+                    {%endif%}
+                    {%endfor%}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+        {% for a in sum_segmentasi_brisurf %}
+        {% if a.BRANCH == cabang %}
+        {% load humanize %}
+            <h6>Total Premi BRISURF NON BRISURF : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+        {%endif%}
+        {%endfor%}
+    </div>
+</div>
+
+<!-- <h6>Kategori BRISURF</h6>
+<div>
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                {%if judul_format == 'tahunan_detail'%}
+                    <th scope="col" style="color:white">Bulan</th>
+                {%else%}
+                    <th scope="col" style="color:white">Tanggal</th>
+                {%endif%}
+                <th scope="col" style="color:white">UNIT KERJA</th>
+                <th scope="col" style="color:white">KATEGORI</th>
+                <th scope="col" style="color:white">PREMI</th>
+            </tr>
+        </thead>
+        {% if judul_format == 'bulanan'%}
+            {% for a in brisurf_mingguan %}
+            {% if a.BRANCH == cabang %}
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;">Minggu ke - {{ a.week }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.branchName  }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.kategori }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%elif judul_format == 'tahunan_detail' %}
+            {% for a in brisurf_tahunan %}
+            {% if a.BRANCH == cabang %}
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.branchName  }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.kategori }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%else%}
+                <tr>
+                    <td style="text-align:center;padding-top:5px;"></td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.wholesale |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.mikro |floatformat:0 |  intcomma }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.ritel |floatformat:0 |  intcomma }}</td>
+                </tr>
+        {%endif%}
+    </table>
+</div>
+
+<hr class='hrItem' />
+
+<div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+    {% for a in sum_brisurf_tahunan %}
+    {% if a.BRANCH == cabang %}
+    {% load humanize %}
+        <h6>Total Premi BRISURF- : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+    {%endif%}
+    {%endfor%}
+</div>
+
+<h6>Kategori NON BRISURF</h6>
+
+<div>
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                {%if judul_format == 'tahunan_detail'%}
+                    <th scope="col" style="color:white">Bulan</th>
+                {%else%}
+                    <th scope="col" style="color:white">Tanggal</th>
+                {%endif%}
+                <th scope="col" style="color:white">UNIT KERJA</th>
+                <th scope="col" style="color:white">KATEGORI</th>
+                <th scope="col" style="color:white">PREMI</th>
+            </tr>
+        </thead>
+        {% if judul_format == 'bulanan'%}
+            {% for a in non_brisurf_tahunan %}
+            {% if a.BRANCH == cabang %}
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;">Minggu ke - {{ a.week }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.branchName  }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.kategori }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%elif judul_format == 'tahunan_detail' %}
+            {% for a in non_brisurf_tahunan %}
+            {% if a.BRANCH == cabang %}
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.branchName  }}</td>
+                        <td style="text-align:center;padding-top:5px;">{{ a.kategori }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%else%}
+                <tr>
+                    <td style="text-align:center;padding-top:5px;"></td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.wholesale |floatformat:0 |  intcomma  }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.mikro |floatformat:0 |  intcomma }}</td>
+                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.ritel |floatformat:0 |  intcomma }}</td>
+                </tr>
+        {%endif%}
+    </table>
+</div>
+
+<hr class='hrItem' />
+
+<div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+    {% for a in sum_non_brisurf_tahunan %}
+    {% if a.BRANCH == cabang %}
+    {% load humanize %}
+        <h6>Total Premi NON BRISURF - : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+    {%endif%}
+    {%endfor%}
+</div>
+
+<hr class='hrItem' />
+
+<div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+    {% for a in sum_segmentasi_brisurf %}
+    {% if a.BRANCH == cabang %}
+    {% load humanize %}
+        <h6>Total Premi BRISURF NON BRISURF- : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+    {%endif%}
+    {%endfor%}
+</div> -->

@@ -1,0 +1,143 @@
+.form-group-email-admin {
+    display: flex;
+}
+
+input#email_admin {
+    margin-left: 60px;
+    margin-bottom: 20px;
+    width: 80%;
+    height: 24px;
+    border-radius: 7px;
+    border: 1px solid #939393;
+}
+
+input#password {
+    margin-left: 33px;
+    margin-bottom: 20px;
+    width: 80%;
+    height: 24px;
+    border-radius: 7px;
+    border: 1px solid #939393;
+}
+
+.form-group-password {
+    display: flex;
+}
+
+a.forgot-password {
+    text-decoration: none;
+    font-size: 13px;
+    color: #0f63ba;
+}
+
+.form-boxLogin {
+    border: 1px solid gray;
+    width: 400px;
+    height: 85px;
+    padding: 17px;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
+.border-login {
+    border: 4px solid orange;
+    width: 429px;
+    border-radius: 7px;
+    box-shadow: 2px 2px #e4e4e4;
+}
+
+button.submit_login {
+    margin-top: 20px;
+    width: 435px;
+    height: 28px;
+    border: 1px solid;
+    border-radius: 7px;
+    background: #1658c0;
+    color: white;
+}
+
+button.submit_login:hover{
+    background:orange;
+    cursor:pointer;
+}
+
+input#email {
+    margin-left: 60px;
+    margin-bottom: 20px;
+    width: 80%;
+    height: 24px;
+    border-radius: 7px;
+    border: 1px solid #939393;
+}
+
+.login{
+    margin:auto;
+    width: 40%;
+}
+
+.title-page {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+h5.sub-title {
+    margin-top: -10px;
+    color: #ffb224;
+    font-size: 15px;
+    font-style: italic;
+}
+
+h3.main-title {
+    color: #3063b4;
+    font-size: 20px;
+    margin-top: 82px;
+}
+
+p.desc-page {
+    font-size: 13px;
+    line-height: 25px;
+    font-style: italic;
+}
+
+.main-login{
+    display:flex;
+    justify-content:center;
+}
+
+.logo-login{
+    width:35%;
+}
+
+@media only screen and (max-width: 700px){    
+    .main-title{
+        font-size: 18px;
+        display:none;
+    }
+
+    .sub-title{
+        display:none;
+    }
+
+    .desc-page{
+        display: none;
+    }
+
+    .main-login{
+        display: inline;
+    }
+
+    .logo-login{
+        display: none;
+    }
+
+    .login{
+        position:absolute;
+        top:25%;
+        left:7%;
+    }
+
+    .nav-header{
+        margin-right:4%;
+    }
+}

@@ -1,0 +1,146 @@
+body{
+    /* margin : 25px 60px 25px 60px !important; */
+    font-family: verdana, arial, helvetica !important;
+    /* background-color: blue; */
+    width : 100%;
+    /* min-height: 100vh; */
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top:2%;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+}
+
+.header {
+    display: flex;
+    border-bottom: 1px solid #dedede;
+    box-shadow: 1px 2px 2px 1px #cdcccc;
+    border-radius: 7px;
+}
+
+.content-header {
+    margin-left: auto;
+    order: 2;
+    display: block;
+}
+
+.image-logo{
+    width:180px;
+    cursor:
+    pointer;
+    padding-top: 12px;
+    padding-left: 12px;
+    padding-bottom: 9px;
+    /* margin:30px 0px; */
+}
+
+li.link-header {
+    list-style: none;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+li.link-header a {
+    color:gray;
+    display: block;
+    /* text-transform: uppercase; */
+}
+
+li.link-header a:hover {
+    color:rgb(15, 84, 181);
+}
+
+ul.nav-header {
+    display: flex;
+    padding-right: 13px;
+    padding-top: 9px;
+}
+
+nav.nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+a.toggle-button {
+    position:absolute;
+    top: .75rem;
+    right: 1rem;
+    display:none;
+    flex-direction: column;
+    justify-content: space-between;
+    width:30px;
+    height: 21px;
+}
+
+a.toggle-button .bar{
+    height: 3px;
+    width: 100%;
+    background-color: gray;
+    border-radius: 10px;
+}
+
+
+@media print {
+    .new-page {
+      page-break-before: always;
+    }
+  }
+
+
+div#footer-content {
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #8d8d8d;
+}
+
+.menu-btn{
+    border-bottom: 4px solid gray;
+}
+
+.menu-bar{
+    display:none;
+}
+
+@media only screen and (max-width: 700px) {
+    body{
+        /* margin : 25px 60px 25px 60px !important; */
+        font-family: verdana, arial, helvetica !important;
+        /* background-color: blue; */
+        width : 100%;
+        min-height: 100vh;
+        padding-left: 4%;
+        padding-right: 4%;
+        padding-top:2%;
+        box-sizing: border-box;
+        /* overflow: hidden; */
+    }
+
+    .image-logo{
+        margin-top: 10px;
+        width:160px;
+        height: 50px;
+    }
+
+    ul.nav-header{
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    li.link-header{
+        display: block;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        float:none;
+    }
+
+    li.link-header a{
+        color: gray;
+        /* text-transform: uppercase; */
+    }
+}
+

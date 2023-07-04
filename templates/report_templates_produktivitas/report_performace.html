@@ -1,0 +1,29 @@
+<div class="body-informasi">
+    <h6>Laporan Produksi Segmentasi</h6>
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                {%if judul_format == 'tahunan_bulanan'%}
+                    <th scope="col" style="color:white">Bulan</th>
+                {%else%}
+                    <th scope="col" style="color:white">Tanggal</th>
+                {%endif%}
+                <th scope="col" style="color:white">Cabang</th>
+                <th scope="col" style="color:white">Total Premi</th>
+            </tr>
+        </thead>
+
+        {% for a in transaksi_cabang %}
+        {% load l10n %}
+            <tbody style="margin-top: 10px;">
+                <tr>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d-m, Y" }} - {{ startdate | date:"d-m, Y" }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.branch }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | localize }}</td>
+                </tr>
+            </tbody>
+        {%endfor%}
+    </table>
+
+    <hr class='hrItem' />
+</div>

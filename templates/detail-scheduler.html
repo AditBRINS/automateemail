@@ -1,0 +1,190 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- <h3 style="margin-top: 30px;">Status Penjadwalan</h3>
+    <p style="margin-top:-12px;font-size: 14px;">Informasi status penjadwalan</p> -->
+    
+    <div class="main-detail">
+        <div class = "table-log">
+            <div>
+                <h3 style="margin-top: 30px;">Riwayat Eksekusi</h3>
+                <p style="margin-top:-12px;font-size: 14px;">Informasi status penjadwalan</p>
+                <!-- <p>Menampilkan Riwayat Eksekusi</p> -->
+                <table class="table">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th scope="col" class="header-table">No</th>
+                            <!-- <th scope="col" class="header-table">ID Log</th> -->
+                            <!-- <th scope="col" class="header-table">ID Email</th> -->
+                            <th scope="col" class="header-table">Email Penerima</th>
+                            <!-- <th scope="col" class="header-table">Waktu Eksekusi</th> -->
+                            <th scope="col" class="header-table">Terakhir eksekusi</th>
+                            <th scope="col" class="header-table" style="width:80px;">Status</th>
+                            <!-- <th scope="col" class="header-table">Laporan</th> -->
+                            <!-- <th scope="col" class="header-table" style="width:80px;">Laporan</th> -->
+                        </tr>
+                    </thead>
+                        <tbody>
+                            {% for logs in log %}
+                            <tr class="border-table">
+                                <td class="text-table">{{ logs.running_id }}</td>
+                                <!-- <td class="text-table">{{ logs.id_log }}</td> -->
+                                <!-- <td class="text-table">{{ logs.id_job.id_job }}</td> -->
+                                <td class="text-table">{{ logs.id_job.email_penerima }}</td>
+                                <!-- <td class="text-table">{{ logs.id_job.waktu_eksekusi }} - {{ logs.id_job.jam_eksekusi }}</td> -->
+                                <!-- <td class="text-table">{{ logs.id_job.id_job }}</td> -->
+                                <td class="text-table">{{ logs.eksekusi }}</td>
+                                <td class="text-table">{{ 'Berhasil Dikirim' }}
+                                    <!-- {%if logs.status == 1 %}
+                                        Berhasil Dikirim
+                                    {%endif%} -->
+                                </td>
+                                <!-- <td class="text-table">
+                                    {%if logs.format_laporan == 'pdf'%}
+                                        <a href="/pdf_report/{{ logs.id_log }}">
+                                            <button class="btn-report">PDF</button>
+                                        </a>
+                                    {%else%}
+                                        <a href="/excel_report/{{ logs.id_log }}">
+                                            <button class="btn-report" style="background-color: #1d6f42;">XLS</button>
+                                        </a>
+                                    {%endif%}
+                                </td> -->
+                                <!-- <td class="text-table">
+                                    <a href="/pdf/{{ logs.id_job.id_job }}">
+                                        <button class="btn-report">PDF</button>
+                                    </a>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                        {%endfor%}
+                </table>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if log.has_previous %}
+                            <a href="?page=1" class="num-pag">&laquo; first</a>
+                            <a href="?page={{ log.previous_page_number }}" class="num-pag">previous</a>
+                        {% endif %}
+            
+                        <span class="current">
+                            Laman {{ log.number }} dari {{ log.paginator.num_pages }}.
+                        </span>
+            
+                        {% if log.has_next %}
+                            <a href="?page={{ log.next_page_number }}" class="num-pag">next</a>
+                            <a href="?page={{ log.paginator.num_pages }}" class="num-pag">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="report-info" data-aos="fade-up">
+                    <h3>Informasi</h3>
+                    <p style="font-size: 14px; margin-top: -10px;">Informasi jumlah pengiriman email</p>
+                    <div class="box-info">
+                        <div class="square-right">
+                            <p class = "title-info">Berhasil Terkirim</p>
+                            <div class="border"></div>                
+                            <h1 style="text-align: center;color:white;">{{ obj_true }}</h1>
+                        </div>
+                        <div class="square-left">
+                            <p class = "title-info">Gagal Terkirim</p>
+                            <div class="border"></div>  
+                            <h1 style="text-align: center;color:white;">{{ obj_false }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-left:20px;">
+                <h3 style="margin-top: 30px;">Status Penjadwalan</h3>
+                <p  style="margin-top:-12px;font-size: 14px;">Informasi status penjadwalan</p>
+                <table class="table">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th scope="col" class="header-table" style="width:10px;">No</th>
+                            <th scope="col" class="header-table" style="width:50px;">ID Job</th>
+                            <th scope="col" class="header-table">Status</th>
+                            <th scope="col" class="header-table">Laporan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for schedules in schedule%}
+                            <tr class="border-table">
+                                <td class="text-table">{{ schedules.running_id }}</td>
+                                <td class="text-table">{{ schedules.id_job }}</td>
+                                <td>
+                                    <div id="switch-btn">
+                                        {%if schedules.status_job == 1%}
+                                        <a href="/status_update_on_job/{{ schedules.running_id }}/{{ schedules.id_job }}" class = "btn_onoff">
+                                            <button id ='id_status_on' class="status_on">Aktif</button>
+                                        </a>
+                                        <a href="/status_update_off_job/{{ schedules.running_id }}/{{ schedules.id_job }}">
+                                            <button class="status_off">Pending</button>
+                                        </a>
+                                        {%else%}
+                                        <a href="/status_update_on_job/{{ schedules.running_id }}/{{ schedules.id_job }}" class = "btn_onoff">
+                                            <button class="status_on">Aktif</button>
+                                        </a>
+                                        <a href="/status_update_off_job/{{ schedules.running_id }}/{{ schedules.id_job }}">
+                                            <button id='id_status_off' class="btn btn-danger status_off">Pending</button>
+                                        </a>
+                                        {% endif%}
+                                    </div>
+                                </td>
+                                <td class="text-table">
+                                    {%if schedules.format_laporan == 'pdf'%}
+                                        <a href="/report/{{ schedules.id_job }}">
+                                            <button class="btn-report">PDF</button>
+                                        </a>
+                                    {%else%}
+                                        <a href="/excel_report/{{ schedules.id_job }}">
+                                            <button class="btn-report" style="background-color: #1d6f42;">XLS</button>
+                                        </a>
+                                    {%endif%}
+                                </td>
+                            </tr>
+                        </tbody>
+                        {%endfor%}
+                </table>                
+            </div>
+        </div> 
+    </div>
+
+    <script>
+        const loader = document.querySelector('.loader');
+        const main = document.querySelector('.main-detail');
+
+        function init() {
+            setTimeout(() => {
+                loader.style.opacity = 0;
+                loader.style.display = 'none';
+
+                main.style.display = 'block';
+                setTimeout(() => (main.style.opacity = 1), 50);
+            }, 2000);
+        }
+        init();
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".active").click(function(){
+                $(".text").addClass("intro");
+            });
+        });
+    </script>
+
+    <style>
+        .intro {
+            background-color: red;
+        }
+    </style>
+
+{% endblock %}

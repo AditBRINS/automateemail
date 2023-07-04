@@ -1,0 +1,143 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<!-- <div class="loader">
+    <span></span>
+    <span></span>
+    <span></span>
+</div> -->
+
+{%if messages%}
+{%for msg in messages%}
+    <div class="alert alert-{{ msg.tags }} m-2" id="msg-addEmail" role="alert" data-aos="fade-down">
+        {{ msg }}
+    </div>
+{%endfor%}
+{%endif%}
+
+<div class="main-email">
+    <div class="div-flex">
+        <div style="width: 38%;">
+            {%if kode_cabang == None%}
+            <form method="POST" action="/insert_email/" onSubmit="return confirm('Input data?') ">
+                <h3 style="margin-top:40px; display: block;">Tambahkan Email</h3>
+                <p style="margin-top:-12px;font-size: 14px;display: block;">Tambahkan email penerima</p>
+                {% csrf_token %}
+                <div class="border-email"></div>
+                <div class="form-boxScheduler">
+                    <div class="form-group-email">
+                        <label style="font-size:14px;" for="email_cabang" >Email Penerima</label><br>
+                        <input type="email" id="email_penerima" name="email_cabang"><br>
+                    </div>
+        
+                    <div class="form-group-kode">
+                        <label style="font-size:14px;margin-top: 25px;" for="kode_cabang">Kode Cabang</label><br>
+                        <input type="text" id="list_cabang" name="kode_cabang"><br>
+                    </div>
+                    
+                    <div class="form-group-nama">
+                        <label style="font-size:14px;margin-top: 25px;" for="nama_cabang">Nama Cabang</label><br>
+                        <input type="text" id="nama_cabang" name="nama_cabang"><br>
+                    </div>
+                </div>        
+                <button type="submit" class="submit_email">Submit</button>
+            </form> 
+            {%else%}
+            {%for email in email%}
+            <h3 style="margin-top:40px; display: block;">Update Email</h3>
+            <p style="margin-top:-12px;font-size: 14px;display: block;">Perbarui email penerima</p>
+
+            <form method="POST" action="/update_cabang/{{ email.kode_cabang }}" onSubmit="return confirm('Update data?') ">
+                {% csrf_token %}
+                <div class="border-email"></div>
+                <div class="form-boxScheduler">
+                    <div class="form-group-email">
+                        <label style="font-size:14px;" for="email_cabang" >Email Penerima</label><br>
+                        <input type="text" id="email_penerima" name="email_cabang" value="{{ email.email_cabang }}"><br>
+                    </div>
+        
+                    <div class="form-group-kode">
+                        <label style="font-size:14px;margin-top: 25px;" for="kode_cabang">Kode Cabang</label><br>
+                        <input type="text" id="list_cabang" name="kode_cabang" value="{{ email.kode_cabang }}" readonly><br>
+                    </div>
+                    
+                    <div class="form-group-nama">
+                        <label style="font-size:14px;margin-top: 25px;" for="nama_cabang">Nama Cabang</label><br>
+                        <input type="text" id="nama_cabang" name="nama_cabang" value="{{ email.nama_cabang }}"><br>
+                    </div>
+                </div>        
+                <button type="submit" class="submit_email">Update</button>
+            </form>
+            {%endfor%}
+            {%endif%}
+        </div>
+    
+        <div class = "status-pengiriman" style="margin-top: -60px;">
+            
+            <h3 style="margin-top:100px; display: block;">Informasi</h3>
+            <p style="margin-top:-12px;font-size: 14px;display: block;">Informasi seputar penerima email</p>
+    
+            <div class="border-email2"></div>
+    
+            <table class="table" style="margin-top:15px;">
+                <thead>
+                    <tr class="border-bottom">
+                        <th scope="col" class="header-table">Kode Cabang</th>
+                        <th scope="col" class="header-table">Nama Cabang</th>
+                        <th scope="col" class="header-table" style="width:250px;">Email Cabang</th>
+                        <th scope="col" class="header-table">Action</th>
+                        <th scope="col" class="header-table">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for email in email%}
+                        <td class="text-table">{{ email.kode_cabang }}</td>
+                        <td class="text-table">{{ email.nama_cabang }}</td>
+                        <td class="text-table">{{ email.email_cabang }}</td>
+                        <td class="text-table"><a href="/update_cabang_form/{{ email.kode_cabang }}"><button class="btn-update" style="margin-bottom: 5px;">Perbarui</button></a></td>
+                        <td class="text-table"><button class="btn-delete" style="margin-bottom: 5px;"><a href="/delete_cabang/{{ email.kode_cabang }}" style="text-decoration: none; color: white;" onclick="return confirm('Hapus data dengan kode cabang : {{ email.kode_cabang }} ?')">Hapus</a></button></td> 
+                    </tr>
+                </tbody>
+                        {%endfor%}
+            </table>
+    
+            <div class="pagination">
+                <span class="step-links">
+                    {% if emailpage.has_previous %}
+                        <a href="?page=1" class="num-pag">&laquo; first</a>
+                        <a href="?page={{ emailpage.previous_page_number }}" class="num-pag">previous</a>
+                    {% endif %}
+        
+                    <span class="current">
+                        Laman {{ emailpage.number }} dari {{ emailpage.paginator.num_pages }}.
+                    </span>
+        
+                    {% if emailpage.has_next %}
+                        <a href="?page={{ emailpage.next_page_number }}" class="num-pag">next</a>
+                        <a href="?page={{ emailpage.paginator.num_pages }}" class="num-pag">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+    
+        </div> 
+    </div>
+</div>
+
+<!-- <script>
+    const loader = document.querySelector('.loader');
+    const main = document.querySelector('.main-email');
+
+    function init() {
+        setTimeout(() => {
+            loader.style.opacity = 0;
+            loader.style.display = 'none';
+
+            main.style.display = 'block';
+            setTimeout(() => (main.style.opacity = 1), 50);
+        }, 4000);
+    }
+    init();
+</script> -->
+
+{% endblock %}

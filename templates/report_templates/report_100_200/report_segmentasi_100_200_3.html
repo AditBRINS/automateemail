@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            body {
+                font-weight: 100;
+                font-size: 12px;
+            }
+
+            .body-informasi{
+                position: relative;
+                margin:0 auto; 
+            }
+            
+            .header{
+                width: 100%;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #000000;
+            }
+
+            .hrItem {
+                border: none;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+
+            .footer { 
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .custom-page-start {
+                margin-top: 50px;
+            }
+
+            @page {
+                margin : 1cm 1cm 0cm 1cm;
+                size: 38cm 27cm;
+            }
+
+            .page-break{
+                page-break-after: always;
+            }
+
+            .site-footer {
+                background: orange;
+            }
+
+            .footer{
+                position:absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            .box {
+                display: flex;
+                justify-content: space-between;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width: 180px;margin-bottom: 20px;">
+            <img src="../static/image/logo.png" alt="">
+        </div>
+        
+        <table>
+            <tr style="padding-top: 1px;">
+                <td>Id Report : {{ running_id }}</td>
+                <td>Penerima : DIVISI JLO</td>
+                <td>Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+            </tr>
+
+            <tr style="padding-top: 1px;">
+                <td>Email Penerima : {{ email_penerima }}</td>
+                <td>Laporan Dikirim : {{ today }}</td>
+                <td>Format Lampiran : {%if periode == 'tahunan_detail'%} <b>Tahunan</b> {%elif periode == 'bulanan'%} <b>Bulanan</b> {%else%} <b>Harian</b> {%endif%} <b>Segmentasi</b></td>
+            </tr>
+        </table>
+
+        <hr class='hrItem' />
+
+        <div style="text-align:center;">
+            {%for a in template_data%}
+            {%if a.id_template == id_template%}
+                <b style="text-align:center;">{{ a.nama_template }}</b><br>
+            {%endif%}
+            {%endfor%}
+        </div>
+
+        <!-- <div class="body-informasi">    
+            <table id="table-info">
+                <thead>
+                    <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                        <th scope="col" style="color:white">Unit Kerja</th>
+                        <th scope="col" style="color:white">WholeSale</th>
+                        <th scope="col" style="color:white">Mikro</th>
+                        <th scope="col" style="color:white">Ritel</th>
+                        <th scope="col" style="color:white">Ritel Mikro</th>
+                        <th scope="col" style="color:white">Digital</th>
+                        <th scope="col" style="color:white">Syariah</th>
+                        <th scope="col" style="color:white">Total</th>
+                    </tr>
+                </thead>
+                {% for a in segmentasi_kinerja_2 %}
+                {% load humanize %}
+                    <tbody style="margin-top: 10px;">
+                        <tr>
+                            <td style="text-align:center;padding-top:5px;">{{a.nama_cabang}}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.wholesale |floatformat:0 |  intcomma  }}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.mikro |floatformat:0 |  intcomma }}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.ritel |floatformat:0 |  intcomma }}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.ritel_mikro |floatformat:0 |  intcomma }}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.digital|floatformat:0  | intcomma }}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.syariah|floatformat:0  | intcomma }}</td>
+                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.premi_total|floatformat:0  | intcomma }}</td>
+                        </tr>
+                    </tbody>
+                {%endfor%}
+            </table>
+        
+            <hr class='hrItem' />
+        </div> -->
+
+        <table id="table-info">
+            <thead>
+                <tr style="background: rgb(3, 15, 119);color: white; border-right: 4px solid white;">
+                    <td style="font-weight: bold;text-align: center;">Unit Kerja</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                        RITEL CAPTIVE
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        MIKRO CAPTIVE
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        RITEL NON CAPTIVE
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        MIKRO NON CAPTIVE
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </thead>
+            {%for a in sum_segmentasi %}
+                {%for b in persentase%}
+                {%if a.branch == b.branch%}
+                {% load humanize %}
+            <tbody>
+                <tr style="color: black;border-right: 4px solid white;padding-top: 3px;">
+                    <td style="text-align: center;">{{a.nama_cabang}}</td>
+                    <td>
+                        {%for c in target%}
+                        {%if b.branch == c.Branch %}
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.Retail_Pos_BRI |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">{{ c.Retail_Pos_BRI |floatformat:0 |  intcomma  }}</td>
+                                {%if b.Retail_Pos_BRI < 80%}
+                                    <td style="text-align: center;background-color: red; color: white;font-weight: bolder;">{{ b.Retail_Pos_BRI |floatformat:0 |  intcomma  }} %</td>
+                                {%elif b.Retail_Pos_BRI < 90%}
+                                    <td style="text-align: center;background-color: rgb(209, 172, 5); color: white;font-weight: bolder;">{{ b.Retail_Pos_BRI |floatformat:0 |  intcomma  }} %</td>
+                                {%else%}
+                                    <td style="text-align: center;background-color: green; color: white;font-weight: bolder;">{{ b.Retail_Pos_BRI |floatformat:0 |  intcomma  }} %</td>
+                                {%endif%}
+                            </tr>
+                        </table>
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                    <td>
+                        {%for c in target%}
+                        {%if b.branch == c.Branch %}
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.Mikro_Pos_BRI |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">{{ c.Mikro_Pos_BRI |floatformat:0 |  intcomma  }}</td>
+                                {%if b.Mikro_Pos_BRI < 80%}
+                                    <td style="text-align: center;background-color: red; color: white;font-weight: bolder;">{{ b.Mikro_Pos_BRI |floatformat:1 |  intcomma  }} %</td>
+                                {%elif b.Mikro_Pos_BRI < 90%}
+                                    <td style="text-align: center;background-color: rgb(209, 172, 5); color: white;font-weight: bolder;">{{ b.Mikro_Pos_BRI |floatformat:1 |  intcomma  }} %</td>
+                                {%else%}
+                                    <td style="text-align: center;background-color: green; color: white;font-weight: bolder;">{{ b.Mikro_Pos_BRI |floatformat:1 |  intcomma  }} %</td>
+                                {%endif%}
+                            </tr>
+                        </table>
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                    <td>
+                        {%for c in target%}
+                        {%if b.branch == c.Branch %}
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.Retail_Pos_umum |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">{{ c.Retail_Pos_umum |floatformat:0 |  intcomma  }}</td>
+                                {%if b.Retail_Pos_umum < 80%}
+                                    <td style="text-align: center;background-color: red; color: white;font-weight: bolder;">{{ b.Retail_Pos_umum |floatformat:1 |  intcomma  }} %</td>
+                                {%elif b.Retail_Pos_umum < 90%}
+                                    <td style="text-align: center;background-color: rgb(209, 172, 5); color: white;font-weight: bolder;">{{ b.Retail_Pos_umum |floatformat:1 |  intcomma  }} %</td>
+                                {%else%}
+                                    <td style="text-align: center;background-color: green; color: white;font-weight: bolder;">{{ b.Retail_Pos_umum |floatformat:1 |  intcomma  }} %</td>
+                                {%endif%}
+                            </tr>
+                        </table>
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                    <td>
+                        {%for c in target%}
+                        {%if b.branch == c.Branch %}
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.Mikro_Pos_umum |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">{{ c.Mikro_Pos_umum |floatformat:0 |  intcomma  }}</td>
+                                {%if b.Mikro_Pos_umum < 80%}
+                                    <td style="text-align: center;background-color: red; color: white;font-weight: bolder;">{{ b.Mikro_Pos_umum |floatformat:1 |  intcomma  }} %</td>
+                                {%elif b.Mikro_Pos_umum < 90%}
+                                    <td style="text-align: center;background-color: rgb(252, 207, 8); color: white;font-weight: bolder;">{{ b.Mikro_Pos_umum |floatformat:1 |  intcomma  }} %</td>
+                                {%else%}
+                                    <td style="text-align: center;background-color: green; color: white;font-weight: bolder;">{{ b.Mikro_Pos_umum |floatformat:1 |  intcomma  }} %</td>
+                                {%endif%}
+                            </tr>
+                        </table>
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                </tr>
+            </tbody>
+                {%endif%}
+                {%endfor%}
+            {%endfor%}
+        </table>
+        
+        {%if periode == 'tahunan_detail'%}
+        <table>
+            {% load humanize %}
+            <tr style="background: rgb(233,233,233);color: black;font-weight: bold;padding: 3px;">
+                <td style="text-align: center;">TOTAL</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{sum_Retail_Pos_BRI | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{sum_target_Retail_Pos_BRI | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{persentase_retail_pos_bri | floatformat:0 }}%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{sum_Mikro_Pos_BRI | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{sum_target_Mikro_Pos_BRI | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{persentase_mikro_pos_bri | floatformat:0 }}%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{sum_Retail_Pos_umum | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{sum_target_Retail_Pos_umum | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{persentase_ritel_pos_umum | floatformat:0 }}%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{sum_Mikro_Pos_BRI | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{sum_target_Mikro_Pos_BRI | floatformat:0 | intcomma}}</td>
+                            <td style="text-align: center;font-weight: bold;">{{persentase_mikro_pos_bri | floatformat:0 }}%</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {%endif%}
+
+        <div>
+            <pdf:nextpage /> 
+        </div>
+    </body>
+</html>
+
+
+

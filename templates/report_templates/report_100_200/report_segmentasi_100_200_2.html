@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <body>
+        <table id="table-info">
+            <thead>
+                <tr style="background: rgb(3, 15, 119);color: white; border-right: 4px solid white;">
+                    <td style="font-weight: bold;text-align: center;">Unit Kerja</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                        WHOLESALE
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        SYARIAH
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        DIGITAL
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </thead>
+            {%for a in segmentasi_kinerja_2 %}
+                {%for b in persentase%}
+                {%if a.branch == b.branch%}
+                {% load humanize %}
+            <tbody>
+                <tr style="color: black;border-right: 4px solid white;padding-top: 3px;">
+                    <td style="text-align: center;">{{a.nama_cabang}}</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.wholesale |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        {%for c in target_2%}
+                        {%if b.branch == c.Branch %}
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.syariah |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">{{ c.Syariah |floatformat:0 |  intcomma  }}</td>
+                                {%if b.Syariah < 80%}
+                                    <td style="text-align: center;background-color: red; color: white;font-weight: bolder;">{{ b.Syariah |floatformat:1 |  intcomma  }} %</td>
+                                {%elif b.Syariah < 90%}
+                                    <td style="text-align: center;background-color: yellow; color: white;font-weight: bolder;">{{ b.Syariah |floatformat:1 |  intcomma  }} %</td>
+                                {%else%}
+                                    <td style="text-align: center;background-color: green; color: white;font-weight: bolder;">{{ b.Syariah |floatformat:1 |  intcomma  }} %</td>
+                                {%endif%}
+                            </tr>
+                        </table>
+                        {%endif%}
+                        {%endfor%}
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.digital |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+                {%endif%}
+                {%endfor%}
+            {%endfor%}
+        </table>
+        
+        {%if periode == 'tahunan_detail'%}
+        <table>
+            <tr style="background: rgb(233,233,233);color: black;font-weight: bold;padding: 3px;">
+                <td style="text-align: center;">TOTAL</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">0</td>
+                            <td style="text-align: center;font-weight: bold;">0</td>
+                            <td style="text-align: center;font-weight: bold;">0%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{ sum_syariah_sya |floatformat:0 |  intcomma  }}</td>
+                            <td style="text-align: center;font-weight: bold;">{{ sum_target_syariah_2 | floatformat:0 |  intcomma }}</td>
+                            <td style="text-align: center;font-weight: bold;">{{ persentase_syariah_2 |floatformat:2}} %</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">0</td>
+                            <td style="text-align: center;font-weight: bold;">0</td>
+                            <td style="text-align: center;font-weight: bold;">0%</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {%endif%}
+
+        <table>
+            <tr style="border:1px solid white;padding-top: 10px;color: white;">
+                <td>Bagian 1</td>
+            </tr>
+        </table>
+
+        <div>
+            <pdf:nextpage /> 
+        </div>
+    </body>
+</html>
+
+
+

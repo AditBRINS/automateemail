@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+{%load static%}
+
+<html lang="en">
+<head>
+    <title>Dashboard - email otomatis</title>
+
+    <script src="{% static 'js/jquery.js' %}"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shceduler.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addEmail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/configure.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loader.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'image/mail.png' %}">
+    <link src="{%static '/image/logo.png' %}">
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body class="background-image">
+    <nav class="header">
+        <div class="container-logo">
+            <img class="image-logo" style="padding:7px;" src="{%static '/image/logo.png' %}">
+        </div>
+
+        <img style='width: 30px;' class="menu-bar" src="{%static '/image/menu.png' %}">
+
+        <div class="content-header">
+            <ul class = 'nav-header'>
+                <!-- <li class="link-header">
+                    <a class = "btn" href="/tambah-email" style="text-decoration:none; color: gray;">Tambah Email</a>
+                </li> -->
+                <li class="link-header">
+                    <a class = "btn-active" href="/template-report/" style="text-decoration:none;">Konfigurasi Template</a>
+                </li>
+                <li class="link-header">
+                    <a class = "btn-active" href="/dashboard" style="text-decoration:none;">Dashboard</a>
+                </li>
+                <li class="link-header">
+                    <a class = "btn-active" href="/logut-admin" style="text-decoration:none;">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    
+    <!-- <div class="loader">
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div> -->
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- <footer class="site-footer">
+        <div id="footer-content">
+            <h6 style="border-top:1px solid rgb(181, 181, 181); margin:auto; width:60%;"></h6>
+            <h6>Copyright 2022 - BRI Insurance </h6>
+        </div>
+    </footer> -->
+
+    <script>
+        setTimeout(function(){
+            if($('#msg-add').length > 0){
+                $('#msg-add').remove();
+            }
+        }, 2000)
+    </script>
+
+    <script>
+        setTimeout(function(){
+            if($('#msg-addEmail').length > 0){
+                $('#msg-addEmail').remove();
+            }
+        }, 2000)
+    </script>
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+</body>
+</html>

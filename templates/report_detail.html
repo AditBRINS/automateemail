@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            body {
+                font-weight: 100;
+                font-size: 12px;
+            }
+
+            .main{
+                position: relative;
+                margin:0 auto;
+            }
+
+            .body-informasi{
+                position: relative;
+                margin:0 auto; 
+            }
+            
+            .header{
+                width: 100%;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #000000;
+            }
+
+            .hrItem {
+                border: none;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+
+            .custom-page-start {
+                margin-top: 50px;
+            }
+
+            @page {
+                margin : 1cm 1cm 0cm 1cm;
+                size: landscape;
+            }
+
+            .site-footer {
+                background: orange;
+            }
+
+            .footer{
+                left: 10;
+                position: absolute;
+                bottom:10px;
+            }
+
+            .box {
+                flex-direction: row; /* items must be placed in a row */
+                width: 100%;
+            }
+            .body-informasi-visual{
+                flex-direction: row; /* items must be placed in a row */
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+
+            {%if jenis_uker == 'CABANG' %}
+                <!-- File report template produksi Segmentasi -->
+                {% include 'report_templates/report_segmentasi.html' %}
+                {% include 'report_templates/report_segmentasi_2.html' %}
+                <!-- File report template produksi segmentasi total-->
+                {% include 'report_templates/report_segmentasi_total.html'%}
+                <!-- File report template brisurf non brisurf  -->
+                {% include 'report_templates/report_brisurf.html' %}
+                <!-- File report template captive non captive -->
+                {% include 'report_templates/report_captive.html' %}
+                <!-- File report template captive non captive -->
+                {% include 'report_templates/report_klaim.html' %}
+                <!-- File report template OS -->
+                {% include 'report_templates/report_os.html'%}
+            {%else%}
+                <!-- File report template produksi segmentasi mro -->
+                {% include 'report_mro/report_segmentasi.html'%}
+                <!-- File report template brisurf non brisurf -->
+                {%include 'report_mro/report_brisurf.html'%}
+                <!-- File report template captive non captive -->
+                {%include 'report_mro/report_captive.html'%}
+                <!-- File report template klaim -->
+                {%include 'report_mro/report_klaim.html'%}
+                <!-- File report template OS -->
+                {%include 'report_mro/report_os.html'%}
+            {%endif%}
+        </div>
+    </body>
+</html>
+
+
+

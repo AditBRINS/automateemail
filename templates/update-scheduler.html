@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <h3>Update - Penjadwalan</h3>
+    <p style="margin-top:-12px;font-size: 14px;">Update penjadwalan pengirman email</p>
+
+    <form  method="POST" action="/update_scheduler/{{ updateSchedule.id_job }}" onSubmit="return confirm('Input data?')" >
+        {% csrf_token %}
+        <div class="border-form">
+            <p style="font-size: 13px;">Pengirim email : adityaallaam123@gmail.com </p>    
+        </div>
+        <div id="border"></div>
+        <div class="form-boxScheduler">
+            <label for="#">Pengiriman:</label>
+            <select id="send-templates" name="periodic" onchange="getSelectValue();" value="{{schedule.periodic}}">
+                {%if updateSchedule.periodic == 'daily'%}
+                    <option value="daily" selected="selected">Daily</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                {%elif updateSchedule.periodic == 'monthly'%}
+                    <option value="daily">Daily</option>
+                    <option value="monthly" selected="selected">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                {%elif updateSchedule.periodic == 'yearly'%}
+                    <option value="daily">Daily</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly" selected="selected">Yearly</option>
+                {%endif%}
+            </select>
+            
+            <div id="tanggal-pengiriman" class="form-tanggal">
+                <div id="pengiriman">
+                    <label for="waktu_eksekusi" style="font-size: 14px; margin-left: 6px;">Tanggal Pengriman</label><br>
+                    <input class = "form-dashboard" type="date" id="tanggal_dikiriemail_cabang" name="waktu_eksekusi" value="{{updateSchedule.waktu_eksekusi|date:"Y-m-d"}}"><br>
+                </div>
+            </div>
+       
+            <div class="form-jam">
+                <label for="jam_eksekusi" style="font-size: 14px;">Jam Pengiriman</label><br>
+                <input class = "form-dashboard" type="time" id="jam_dikirim" name="jam_eksekusi" value="{{updateSchedule.jam_eksekusi|time:"h:i:s"}}"><br>
+            </div>
+            
+            <label for="#">Pilih template:</label>
+
+            <select id="choose-template" name="template">
+                {%if updateSchedule.template == 1%}
+                    <option value="1" selected="selected">Laporan Penjualan</option>
+                    <option value="2">Laporan Bulanan</option>
+                {%elif updateSchedule.template == 2%}
+                    <option value="1">Laporan Tahunan</option>
+                    <option value="2" selected="selected">Laporan Produktivitas Cabang</option>
+                {%endif%}
+            </select>
+            
+            <label for="#" style="font-size: 14px;">Eksekusi</label>
+           
+            <label for="#" style="font-size: 14px;">Eksekusi</label>
+            {%if updateSchedule.status == True%}
+                <input type="checkbox" class="cb-aktif-update" name="status" checked>Aktif</input>
+            {%elif updateSchedule.status == False%}
+                <input type="checkbox" class="cb-aktif-update" name="status">Aktif</input>
+            {%endif%}
+            <!-- <input type="checkbox" class="cb-nonaktif">Pending</input> -->
+        </div>
+        <button type="submit" class="btn-submit">Update</button>
+    </form>
+
+{% endblock %}

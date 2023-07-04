@@ -1,0 +1,353 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            body {
+                font-weight: 100;
+                font-size: 12px;
+            }
+
+            .main{
+                position: relative;
+                margin:0 auto;
+            }
+
+            .body-informasi{
+                position: relative;
+                margin:0 auto; 
+            }
+            
+            .header{
+                width: 100%;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #000000;
+            }
+
+            .hrItem {
+                border: none;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+
+            .custom-page-start {
+                margin-top: 50px;
+            }
+
+            @page {
+                margin : 1cm 1cm 0cm 1cm;
+                size: landscape;
+                position: relative;
+            }
+
+            .site-footer {
+                background: orange;
+            }
+
+            .footer{
+                left: 10;
+                position: absolute;
+                bottom:10px;
+            }
+
+            .box {
+                flex-direction: row; /* items must be placed in a row */
+                width: 100%;
+            }
+            .body-informasi-visual{
+                flex-direction: row; /* items must be placed in a row */
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div style="width: 200px;margin-bottom: 20px;">
+                <img src="../static/image/logo.png" alt="">
+            </div>
+
+            <table>
+                <tr style="padding-top: 1px;">
+                    <td>Id Report : {{ running_id }}</td>
+                    <td>Kode Cabang : {{ cabang }}</td>
+                    <td>Laporan Dikirim : {{ today }}</td>
+                </tr>
+
+                <tr style="padding-top: 1px;">
+                    <td>Email Penerima : {{ email_penerima }}</td>
+                    <td>Format Lampiran : {{ judul_format }}</td>
+                    <td>Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                </tr>
+            </table>
+            
+            <hr class='hrItem' />
+
+            <div>
+                <table>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <h6>O/S OVERDUE</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>        
+                        </td>
+                        
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Brisurf Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_captive_brisurf %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Non Brisurf Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_captive_non_brisurf %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Total Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in sum_os_captive %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Non Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_non_captive %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+            
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">O/S Premi</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <table>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <h6>O/S WPC</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;padding-top:5px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>        
+                        </td>
+                        
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Brisurf Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_captive_brisurf_undue %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Non Brisurf Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_captive_non_brisurf_undue %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Total Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in sum_os_captive_undue %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">Non Captive</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_non_captive_undue %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+            
+                        <td style="vertical-align: top;">
+                            <h6 style="color: white;">O/S</h6>
+                            <table>
+                                <thead>
+                                    <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                        <th scope="col" style="color:white">O/S Premi</th>
+                                    </tr>
+                                </thead>
+                                {% for a in os_undue %}
+                                {% if a.Branch == cabang %}
+                                {% load humanize %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                {%endif%}
+                                {%endfor%}
+                            </table>        
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

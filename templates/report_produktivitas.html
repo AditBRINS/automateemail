@@ -1,0 +1,80 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Title</title>
+        <style type="text/css">
+            body {
+                font-weight: 100;
+                font-size: 12px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #000000;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #000000;
+            }
+            .details {
+                padding: 0px;
+                /* display:flex; */
+                /* text-align: left !important; */
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 0px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+            
+            @page {
+                margin : 1cm 1cm 0cm 1cm;
+                size: landscape;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width: 200px;margin-bottom: 20px;">
+            <img src="../static/image/logo.png" alt="">
+        </div>
+        <div class='wrapper'>
+        <div class="details">
+            <div style="margin-bottom:-300px;">
+                Id Report : {{ running_id }}<br/>
+                Email Penerima : {{ email_penerima }}<br/>
+                Kode Cabang : {{ cabang }}<br/>
+            </div>
+            <hr class='hrItem' />
+            <div style="margin-bottom:-300px;">
+                Data Laporan tanggal : {{ enddate | date:"Y-m-d" }} - {{ startdate | date:"Y-m-d" }}<br/>
+                Laporan Dikirim : {{ today }}<br/>
+                Format Lampiran : {{ judul_format }}<br/>
+                {%for a in template_data%}
+                    {%if a.id_template == id_template%}
+                        <b>{{ a.nama_template }}</b>
+                    {%endif%}
+                {%endfor%}
+            </div>
+        </div>
+        
+        <!-- File template premi total -->
+        {% include 'report_templates_produktivitas/report_performace.html' %}
+       <!-- File visualisasi data -->
+        {% include 'report_templates_produktivitas/visual_performance_branch.html' %}
+
+        </div>
+    </body>
+</html>
+
+
+

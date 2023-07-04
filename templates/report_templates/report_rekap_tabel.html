@@ -1,0 +1,199 @@
+<div class="body-informasi">
+    <h6>Laporan Produksi Segmentasi</h6>
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                {%if judul_format == 'tahunan_detail'%}
+                    <th scope="col" style="color:white">Bulan</th>
+                {%else%}
+                    <th scope="col" style="color:white">Tanggal</th>
+                {%endif%}
+                <th scope="col" style="color:white">WholeSale</th>
+                <th scope="col" style="color:white">Digital</th>
+                <th scope="col" style="color:white">Syariah</th>
+            </tr>
+        </thead>
+        {%for sg in segmentasi_tahuanan%}
+        {%if sg.kode_mro == cabang%}
+        {% load humanize %}
+        <tbody>
+            <tr>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sg.wholesale|floatformat:2  | intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sg.digital|floatformat:2  | intcomma }}</td>
+                <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ sg.syariah|floatformat:2  | intcomma }}</td>
+            </tr>
+        </tbody>
+        {%endif%}
+        {%endfor%}
+    </table>
+
+    <!-- Table Ritel Mikro Captive non Captive -->
+    <div style="margin-top: 10px;">
+        <table id="table-info">
+            <tr>
+                <td style="vertical-align: top;">
+                    <table>
+                        <thead>
+                            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                <th scope="col" style="color:white">Tanggal</th>
+                                <th scope="col" style="color:white">Ritel Captive</th>
+                                <th scope="col" style="color:white; border-right: 8px solid white;">Mikro Captive</th>
+                            </tr>
+                        </thead>
+                        {% for b in sum_segker_mingguan_pbri %}
+                        {% if b.kode_mro == cabang %}
+                        {% load humanize %}
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp.{{ b.ritel|floatformat:0  | intcomma }} </td>
+                                    <td style="text-align:center;padding-top:5px;border-right: 8px solid white;font-size: 10px;">Rp.{{ b.mikro|floatformat:0  | intcomma }}</td>
+                                </tr>
+                            </tbody>
+                        {%endif%}
+                        {%endfor%}
+                    </table>
+                </td>
+
+                <td style="vertical-align: top;">
+                    <table>
+                        <thead>
+                            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                                <th scope="col" style="color:white">Tanggal</th>
+                                <th scope="col" style="color:white">Ritel Non Captive</th>
+                                <th scope="col" style="color:white;border-right: 8px solid white;">Mikro Non Captive</th>
+                            </tr>
+                        </thead>
+                        {% for b in sum_segker_mingguan_pu %}
+                        {% if b.kode_mro == cabang %}
+                        {% load humanize %}
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp.{{ b.ritel|floatformat:0  | intcomma }} </td>
+                                    <td style="text-align:center;padding-top:5px;border-right: 8px solid white;font-size: 10px;">Rp.{{ b.mikro|floatformat:0  | intcomma }}</td>
+                                </tr>
+                            </tbody>
+                        {%endif%}
+                        {%endfor%}
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <hr class='hrItem' />
+        
+    <h6>Laporan Premi Brisurf Non Brisurf</h6>
+    <div>
+        <table id="table-info">
+            <thead>
+                <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                    <th scope="col" style="color:white">Tanggal Produksi</th>
+                    <th scope="col" style="color:white">Kode Cabang</th>
+                    <th scope="col" style="color:white">Kategori</th>
+                    <th scope="col" style="color:white">Premi</th>
+                </tr>
+            </thead>
+            {% for a in brisurf_report %}
+            {% if a.BRANCH == cabang %}
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.BRANCH }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.kategori }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        </table>
+    </div>
+
+    <hr class='hrItem' />
+
+    <h6>Laporan Premi Captive Non Captive</h6>
+
+    <table id="table-info">
+        <thead>
+            <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                <th scope="col" style="color:white">Tanggal Produksi</th>
+                <th scope="col" style="color:white">Kode Cabang</th>
+                <th scope="col" style="color:white">Cabang</th>
+                <th scope="col" style="color:white">Segmentasi</th>
+                <th scope="col" style="color:white">Premi</th>
+            </tr>
+        </thead>
+        {% for a in cnc_report %}
+        {% if a.branch == cabang %}
+        {% load humanize %}
+            <tbody style="margin-top: 10px;">
+                <tr>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.branch }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.branchName }}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.captive_non_captive}}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                </tr>
+            </tbody>
+        {%endif%}
+        {%endfor%}
+    </table>
+
+    <hr class='hrItem' />
+
+    <!-- <div class="body-informasi">
+        <h6>Laporan OS</h6>
+        <table id="table-info">
+            <thead>
+                <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                    <th scope="col" style="color:white">Cabang</th>
+                    <th scope="col" style="color:white">Nilai OS</th>
+                </tr>
+            </thead>
+            {%for a in os%}
+            {%if a.Branch_Supervisi == cabang%}
+            {% load humanize %}
+            <tbody>
+                <tr>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">{{a.Branch_Supervisi_name}}</td>
+                    <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                </tr>
+            </tbody>
+            {%endif%}
+            {%endfor%}
+        </table>
+    </div> -->
+
+    <h6>Laporan Klaim</h6>
+    <div>
+        <table id="table-info">
+            <thead>
+                <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                    <th scope="col" style="color:white">Tanggal</th>
+                    <th scope="col" style="color:white">Kode Cabang</th>
+                    <th scope="col" style="color:white">Nilai Klaim</th>
+                </tr>
+            </thead>
+            {% for a in brisurf_report %}
+            {% if a.BRANCH == cabang %}
+            {% load humanize %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.BRANCH }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | floatformat:2 | intcomma }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        </table>
+    </div>
+
+    <div>
+        <pdf:nextpage /> 
+    </div>
+    
+</div>

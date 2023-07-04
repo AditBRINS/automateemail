@@ -1,0 +1,96 @@
+<div style="width: 200px;margin-bottom: 20px;page-break-before: always;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    <div>
+        Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}<br/>
+        Laporan Dikirim : {{ today }}<br/>
+        Format Lampiran : {{ judul_format }}<br/>
+    </div>
+</div>
+
+<div style="text-align:center;">
+    {%for a in template_data%}
+    {%if a.id_template == id_template%}
+        <b style="text-align:center;">{{ a.nama_template }}</b><br>
+    {%endif%}
+    {%endfor%}
+</div>
+
+<hr class='hrItem' />
+
+<div class="body-informasi">
+    <table id="table-info">
+        <div>
+            <h6>Laporan sourcename</h6>
+        </div>
+        <thead>
+            <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                <th scope="col" style="color:white">Tanggal Produksi</th>
+                <th scope="col" style="color:white">Kode Cabang</th>
+                <th scope="col" style="color:white">Cabang</th>
+                <th scope="col" style="color:white">Kode Sumber</th>
+                <th scope="col" style="color:white">Sumber Bisnis</th>
+                <th scope="col" style="color:white">Premi</th>
+            </tr>
+        </thead>
+        {% if judul_format != 'tahunan_bulanan'%}
+            {% for a in sourcename_report %}
+            {% if a.kode_cabang == cabang %}
+            {% load l10n %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.kode_cabang  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.cabang  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.kode_sumber  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.sumber_bisnis  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | localize }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%elif judul_format == 'tahunan_bulanan' %}
+            {% for a in sourcename_report %}
+            {% if a.kode_cabang == cabang %}
+            {% load l10n %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.kode_cabang  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.cabang  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.kode_sumber  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.sumber_bisnis  }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.total_premi | localize }}</td>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%else%}
+                <tr>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                </tr>
+        {%endif%}
+    </table>
+</div>
+
+<hr class='hrItem' />
+
+<div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+    {% for a in sum_sourcename %}
+    {% if a.kode_cabang == cabang %}
+    {% load l10n %}
+        <h6>Total Premi - : Rp.{{ a.total_premi | localize }}</h6>   
+    {%endif%}
+    {%endfor%}
+</div>
+
+<hr class='hrItem' />
+
+

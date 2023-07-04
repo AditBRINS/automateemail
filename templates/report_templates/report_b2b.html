@@ -1,0 +1,128 @@
+<div style="width: 200px;margin-bottom: 20px;page-break-before: always;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    <div>
+        Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}<br/>
+        Laporan Dikirim : {{ today }}<br/>
+        Format Lampiran : {{ judul_format }}<br/>
+    </div>
+</div>
+
+<div style="text-align:center;">
+    {%for a in template_data%}
+    {%if a.id_template == id_template%}
+        <b style="text-align:center;">{{ a.nama_template }}</b><br>
+    {%endif%}
+    {%endfor%}
+</div>
+
+<hr class='hrItem' />
+
+<div class="body-informasi">
+    <table id="table-info">
+        <div>
+            <h6>Laporan B2B</h6>
+        </div>
+        <thead>
+            <tr style="background-color: rgb(11, 88, 165);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                {%if judul_format == 'tahunan_bulanan'%}
+                    <th scope="col" style="color:white">Bulan</th>
+                {%else%}
+                    <th scope="col" style="color:white">Tanggal</th>
+                {%endif%}
+                <th scope="col" style="color:white">WholeSale</th>
+                <th scope="col" style="color:white">Mikro</th>
+                <th scope="col" style="color:white">Ritel</th>
+                <th scope="col" style="color:white">Ritel Mikro</th>
+                <th scope="col" style="color:white">Digital</th>
+                <th scope="col" style="color:white">Syariah</th>
+                <th scope="col" style="color:white">Total</th>
+            </tr>
+        </thead>
+        {% if judul_format != 'tahunan_bulanan'%}
+            {% for a in detail_transaksi %}
+            {% if a.branch == cabang %}
+            {% load l10n %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">{{ a.date | date:"d-m, Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.Premi_WHOLESALE | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.premi_mikro | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.premi_ritel | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.Premi_RITEL_MIKRO | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.Premi_DIGITAL | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.Premi_SYARIAH | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;font-size: 10px;">Rp. {{ a.Premi_Total | localize }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%elif judul_format == 'tahunan_bulanan' %}
+            {% for a in segmentasi_kinerja %}
+            {% if a.branch == cabang %}
+            {% load l10n %}
+                <tbody style="margin-top: 10px;">
+                    <tr>
+                        <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.wholesale |  localize  }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.mikro |  localize }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.ritel |  localize }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.ritel_mikro |  localize }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.digital | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.syariah | localize }}</td>
+                        <td style="text-align:center;padding-top:5px;">Rp. {{ a.premi_total | localize }}</td>
+                    </tr>
+                </tbody>
+            {%endif%}
+            {%endfor%}
+        {%else%}
+                <tr>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                    <td style="text-align:center"></td>
+                </tr>
+        {%endif%}
+    </table>
+</div>
+
+<hr class='hrItem' />
+
+<div class="content-block">
+    <table style="background-color:rgb(202, 202, 202)">
+        {%for sg in segmentasi_tahuanan%}
+        {%if sg.branch == cabang%}
+        {% load l10n %}
+        <tbody>
+            <tr>
+                <td style="text-align:center;padding-top:5px;color:black;"><h6>Total</h6></td>
+                <td style="text-align:center;padding-top:5px;color:black;"><h6>Rp. {{ sg.wholesale | localize }}</h6></td>
+                <td style="text-align:center;padding-top:5px;"><h6>Rp. {{ sg.mikro |  localize }}</h6></td>
+                <td style="text-align:center;padding-top:5px;"><h6>Rp. {{ sg.ritel |  localize }}</h6></td>
+                <td style="text-align:center;padding-top:5px;"><h6>Rp. {{ sg.ritel_mikro |  localize }}</h6></td>
+                <td style="text-align:center;padding-top:5px;"><h6>Rp. {{ sg.digital | localize }}</h6></td>
+                <td style="text-align:center;padding-top:5px;"><h6>Rp. {{ sg.syariah | localize }}</h6></td>
+                <td style="text-align:center;padding-top:5px;"><h6>Rp. {{ sg.premi_total | localize }}</h6></td>
+            </tr>
+        </tbody>
+        {%endif%}
+        {%endfor%}
+    </table>
+</div>
+
+<hr class='hrItem' />
+
+<div class="footer" style="font-size:13px; color: #333; bottom: 0; text-align: center;">
+    <p style="color:gray; text-align:center;">
+        <i style="color:rgb(91, 169, 225);">Kantor Pusat | Head Office | PT BRI Asuransi Indonesia</i><br/>
+        Graha BRI Insurance, Jl Mampang Prpt. Raya No.18, Kota Jakarta Selatan -  12790 Indonesia<br/>
+        Telp : 62-21-791 704 77 / 791 704 78 Email : info@brins.co.id Website : www.brins.co.id<br/>
+        <i style="color:rgb(91, 169, 225);">Call Center : 14081</i>
+    </p>
+</div>
+

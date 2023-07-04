@@ -1,0 +1,182 @@
+<div style="width: 150px;margin-bottom: 20px;page-break-before: always;">
+    <img src="../static/image/logo.png" alt="">
+</div>
+
+<div class="box">
+    {%if jenis_uker == 'MRO'%}
+        {%for a in mro_detail_bulanan%}
+        {%if cabang == a.kode_mro%}
+            <table>
+                <tr style="padding-top: 1px;">
+                    <td>Id Report : {{ running_id }}</td>
+                    <td>Kode Cabang: {{ cabang }} - {{ a.nama_mro }} / {{ jenis_uker }}</td>
+                    <td>Laporan Dikirim : {{ today }}</td>
+                </tr>
+
+                <tr style="padding-top: 1px;">
+                    <td>Email Penerima : {{ email_penerima }}</td>
+                    <td>Format Lampiran : {%if judul_format == 'tahunan_detail'%} <b>Tahunan</b> {%elif judul_format == 'bulanan'%} <b>Bulanan</b> {%elif judul_format == 'mingguan'%} <b>Mingguan</b> {%else%} <b>Harian</b> {%endif%} - <b>Produksi Segmentasi</b></td>
+                    <td>Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                </tr>
+            </table>
+        {%endif%}
+        {%endfor%}
+    {%endif%}
+</div>
+
+
+<hr class='hrItem' />
+
+<div>
+    <table>
+        <tr>
+            <td style="vertical-align:top;">
+                <h6>PRODUKSI PREMI POS BRI</h6>
+                <table id="table-info">
+                    <thead>
+                        <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                            {%if judul_format == 'tahunan_detail'%}
+                                <th scope="col" style="color:white">Bulan</th>
+                            {%else%}
+                                <th scope="col" style="color:white">Tanggal</th>
+                            {%endif%}
+                            <th scope="col" style="color:white;border-right:10px solid white ;">Premi</th>
+                        </tr>
+                    </thead>
+                    {% if judul_format == 'bulanan'%}
+                        {% for a in cnc_mingguan_pbri %}
+                        {% if a.Kode_MRO == cabang %}
+                        {% load humanize %}
+                            <tbody style="margin-top: 10px;">
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;">
+                                        {% if a.week == sum_week_non_captive %}
+                                            {{ enddate | date:"d, b / Y" }} - {{ enddate_weekly_non_captive | date:"d, b / Y" }}
+                                        {%elif a.week == sum_week_non_captive_2 %}
+                                            {{ startdate_weekly_non_captive_2 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_2 | date:"d, b / Y" }}
+                                        {%elif a.week == sum_week_non_captive_3%}
+                                            {{ startdate_weekly_non_captive_3 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_3 | date:"d, b / Y" }}
+                                        {%elif a.week == sum_week_non_captive_4%}
+                                            {{ startdate_weekly_non_captive_4 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_4 | date:"d, b / Y" }}
+                                        {%elif a.week == sum_week_non_captive_5%}
+                                            {{ startdate_weekly_non_captive_5 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_5 | date:"d, b / Y" }}
+                                        {%else%}
+                                            -
+                                        {%endif%}
+                                    </td>
+                                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                </tr>
+                            </tbody>
+                        {%endif%}
+                        {%endfor%}
+                    {%elif judul_format == 'tahunan_detail' %}
+                        {% for a in cnc_tahunan_pbri %}
+                        {% if a.Kode_MRO == cabang %}
+                        {% load humanize %}
+                            <tbody style="margin-top: 10px;">
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                </tr>
+                            </tbody>
+                        {%endif%}
+                        {%endfor%}
+                    {%else%}
+                            <tr>
+                                <td style="text-align:center;padding-top:5px;"></td>
+                                <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                            </tr>
+                    {%endif%}
+                </table>
+                <div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;border-right: 10px solid white;">
+                    {% for a in sum_cnc_mingguan_pbri %}
+                    {% if a.Kode_MRO == cabang %}
+                    {% load humanize %}
+                        <h6>Total Premi POS BRI : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+                    {%endif%}
+                    {%endfor%}
+                </div>
+            </td>
+            <td style="vertical-align: top;">
+                <h6>PRODUKSI PREMI POS UMUM</h6>
+                <table>
+                    <thead>
+                        <tr style="background-color: rgb(3, 15, 119);padding:5px 5px 2px 5px;margin-bottom: 10px;">
+                            {%if judul_format == 'tahunan_detail'%}
+                                <th scope="col" style="color:white">Bulan</th>
+                            {%else%}
+                                <th scope="col" style="color:white">Tanggal</th>
+                            {%endif%}
+                            <th scope="col" style="color:white">Premi</th>
+                        </tr>
+                    </thead>
+                    {% if judul_format == 'bulanan'%}
+                        {% for a in cnc_mingguan_pu %}
+                        {% if a.Kode_MRO == cabang %}
+                        {% load humanize %}
+                            <tbody style="margin-top: 10px;">
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;">
+                                    {% if a.week == sum_week_non_captive %}
+                                        {{ enddate | date:"d, b / Y" }} - {{ enddate_weekly_non_captive | date:"d, b / Y" }}
+                                    {%elif a.week == sum_week_non_captive_2 %}
+                                        {{ startdate_weekly_non_captive_2 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_2 | date:"d, b / Y" }}
+                                    {%elif a.week == sum_week_non_captive_3%}
+                                        {{ startdate_weekly_non_captive_3 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_3 | date:"d, b / Y" }}
+                                    {%elif a.week == sum_week_non_captive_4%}
+                                        {{ startdate_weekly_non_captive_4 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_4 | date:"d, b / Y" }}
+                                    {%elif a.week == sum_week_non_captive_5%}
+                                        {{ startdate_weekly_non_captive_5 | date:"d, b / Y" }} - {{ enddate_weekly_non_captive_5 | date:"d, b / Y" }}
+                                    {%else%}
+                                        -
+                                    {%endif%}
+                                    </td>
+                                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                </tr>
+                            </tbody>
+                        {%endif%}
+                        {%endfor%}
+                    {%elif judul_format == 'tahunan_detail' %}
+                        {% for a in cnc_tahunan_pu %}
+                        {% if a.Kode_MRO == cabang %}
+                        {% load humanize %}
+                            <tbody style="margin-top: 10px;">
+                                <tr>
+                                    <td style="text-align:center;padding-top:5px;">{{ a.month|date:"M/Y" }}</td>
+                                    <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                                </tr>
+                            </tbody>
+                        {%endif%}
+                        {%endfor%}
+                    {%else%}
+                            <tr>
+                                <td style="text-align:center;padding-top:5px;"></td>
+                                <td style="text-align:center;padding-top:5px;">Rp. {{ a.total_premi |floatformat:0 |  intcomma }}</td>
+                            </tr>
+                    {%endif%}
+                </table>
+                <div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+                    {% for a in sum_cnc_tahunan_pu %}
+                    {% if a.Kode_MRO == cabang %}
+                    {% load humanize %}
+                        <h6>Total Premi POS UMUM : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+                    {%endif%}
+                    {%endfor%}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div style="background-color: rgb(227, 227, 227);padding: 10px 10px 5px 10px;">
+        {% for a in sum_segmentasi_cnc %}
+        {% if a.Kode_MRO == cabang %}
+        {% load humanize %}
+            <h6>Total Premi CAPTIVE NON CAPTIVE : Rp.{{ a.total_premi|floatformat:0 |intcomma }}</h6>   
+        {%endif%}
+        {%endfor%}
+    </div>
+</div>
+
+<div>
+    <pdf:nextpage /> 
+</div>

@@ -1,0 +1,350 @@
+.form-tanggal {
+  margin-bottom: -1px;
+  display: none;
+}
+
+.show {
+  display : block;
+}
+
+input#tanggal_dikiriemail_cabang {
+  margin-left: 55px;
+  width: 270px;
+  height: 30px;
+  border-radius: 7px;
+  border: 0.5px solid gray;
+}
+
+.form-jam {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input#jam_dikirim {
+  margin-left: 82px;
+  width: 270px;
+  height: 30px;
+  border: 0.5px solid gray;border-radius: 7px;
+}
+
+
+select#form-templateId {
+  width: 270px;
+  height: 30px;
+  border-radius: 7px;
+}
+
+button.btn-submit {
+  margin-top: 20px;
+  background: #0f63ba;
+  color: white;
+  border: 0px;
+  padding: 8px;
+  border-radius: 7px;
+  width: 510px;
+  box-shadow: 1px 1px 1px 1px #ffe1a9;
+  }
+
+button.btn-submit:hover {
+  cursor:pointer;
+  background:#ffb224;
+}
+
+.form-boxScheduler {
+  border: 1px solid #c2c2c2;
+  padding: 20px;
+  border-radius: 10px;
+  width: 470px;
+  margin-top: 15px;
+  box-shadow: 3px 3px 3px 3px #f8f8f8;
+}
+
+button.btn-update {
+  background: orange;
+  color: white;
+  border: 0px;
+  padding: 7px;
+  border-radius: 7px;
+}
+
+button.btn-update:hover{
+  background: #ffb224;
+  cursor: pointer;
+}
+
+
+button.btn-delete {
+  background: #ff2929c4;
+  color: white;
+  border: 0px;
+  padding: 7px;
+  border-radius: 7px;
+}
+
+button.btn-delete:hover{
+  background:red;
+  cursor:pointer;
+}
+
+button.btn-report {
+  background: #0f63ba;
+  color: white;
+  border: 0px;
+  padding: 7px;
+  border-radius: 7px;
+  width: 50px;
+}
+
+button.btn-report:hover{
+  background: #1658c0;
+  cursor:pointer;
+}
+
+select#send-templates {
+  width: 273px;
+  margin-left: 102px;
+  height: 30px;
+  border-radius: 7px;
+  margin-bottom: 20px;
+}
+
+div#pengiriman {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  margin-top:23px;
+  margin-left:15px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #317ecd;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #317ecd;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 20px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+button.status_on {
+  background: #efefef;
+  color: #9d9d9d;
+  padding: 7px;
+  font-size: 12px;
+  margin-top: 15px;
+  border-radius: 7px;
+  border: 1px solid rgb(208 208 208);
+}
+
+.active, button.status_on:hover{
+  cursor:pointer;
+  background:#1677db;
+  color:white;
+}
+
+button.status_on:active{
+  cursor:pointer;
+  background:#1677db;
+  color:white;
+}
+
+button.status_off {
+  background: #efefef;
+  color: #9d9d9d;
+  border: 1px solid;
+  padding: 7px;
+  font-size: 12px;
+  margin-top: 15px;
+  border-radius: 7px;
+  border: 1px solid rgb(208 208 208);
+}
+
+button.status_off:hover{
+  cursor:pointer;
+  background:#1677db;
+  color:white;
+}
+
+button.status_off:active{
+  cursor:pointer;
+  background:#1677db;
+  color:white;
+}
+
+a.btn_onoff {
+  color: white;
+}
+
+p#current_date {
+  height: 21px;
+  margin-top: -6px;
+}
+
+input#jam_dikirim_submit {
+  margin-left: 74px;
+  width: 270px;
+  height: 30px;
+  border: 0.5px solid gray;
+  border-radius: 7px;
+}
+
+input.cb-aktif {
+  margin-left: 120px;
+  margin-top: 25px;
+}
+
+div#border {
+  border: 3px solid #ffb224;
+  background: #ffb224;
+  border-radius: 7px;
+  width: 505px;
+  opacity: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 3px 3px 3px 3px #f1f1f1;
+}
+
+input.cb-aktif-update {
+  margin-left: 63px;
+  margin-top: 20px;
+}
+
+select#choose-eksekusi {
+  margin-top: 20px;
+  margin-left: 112px;
+  width: 270px;
+  height: 29px;
+  border-radius: 7px;
+}
+
+.border-form {
+  border: 1px solid #bebaba;
+  width: 497px;
+  padding: 7px;
+  border-radius: 7px;
+  box-shadow: 2px 2px 2px 2px #f0f0f0;
+}
+
+button#id_status_off {
+  background: #1658c0;
+  color: white
+}
+
+button#id_status_on {
+  background: #1658c0;
+  color: white
+}
+
+/* .table-log {
+    display: flex;
+} */
+
+.main-detail {
+  opacity: 0;
+  display: none;
+  transition: opacity 0.3s ease-in;
+}
+
+.form-scheduler {
+    /* margin-left: 480px; */
+    margin: auto;
+    width: 37%;
+}
+
+.border-email2 {
+    border: 4px solid orange;
+    width: 731px;
+    border-radius: 7px;
+    box-shadow: 2px 2px #e4e4e4;
+    margin-top: -2px;
+}
+
+a.add-templates {
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 185px;
+    font-style: italic;
+    color: #1150b4;
+}
+
+a.add-templates:hover{
+  color: orange;
+  cursor:pointer;
+}
+
+.table-log {
+    display: flex;
+}
+
+select#format-pengiriman {
+    margin-left: 48px;
+    width: 57.5%;
+    height: 28px;
+    border-radius: 7px;
+    margin-top: 10px;
+}
+
+select#send-branch {
+    margin: 0px 0px 15px 92px;
+    width: 272px;
+    height: 30px;
+    border-radius: 7px;
+}
+
+select#mro_cabang {
+    margin-left: 110px;
+    width: 270px;
+    height: 30px;
+    border: 0.5px solid gray;
+    border-radius: 7px;
+    margin-bottom: 20px;
+}

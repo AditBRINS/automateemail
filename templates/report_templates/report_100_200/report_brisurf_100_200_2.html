@@ -1,0 +1,149 @@
+<html>
+    <body>
+        <div style="width: 180px;margin-bottom: 20px;">
+            <img src="../static/image/logo.png" alt="">
+        </div>
+        
+        <table>
+            <tr style="padding-top: 1px;">
+                <td>Id Report : {{ running_id }}</td>
+                <td>Kode Cabang : {{ cabang }}</td>
+            </tr>
+
+            <tr style="padding-top: 1px;">
+                <td>Email Penerima : {{ email_penerima }}</td>
+                <td>Format Lampiran : <b>BRISURF NON BRISURF</b></td>
+            </tr>
+
+            <tr style="padding-top: 1px;">
+                <td>Data Laporan tanggal : {{ enddate | date:"d, b / Y" }} - {{ startdate | date:"d, b / Y" }}</td>
+                <td> Laporan Dikirim : {{ today }}</td>
+            </tr>
+        </table>
+
+        <hr class='hrItem' />
+
+        <div style="text-align:center;">
+            {%for a in template_data%}
+            {%if a.id_template == id_template%}
+                <b style="text-align:center;">{{ a.nama_template }}</b><br>
+            {%endif%}
+            {%endfor%}
+        </div>
+
+        <table id="table-info">
+            <h6>Kategori Brisuf Syariah</h6>
+            <thead>
+                <tr style="background: rgb(3, 15, 119);color: white; border-right: 4px solid white;">
+                    <td style="font-weight: bold;text-align: center;">Unit Kerja</td>
+                    <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                        BRISURF
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        NON BRISURF
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: center;font-weight: bold;border-right: 4px solid white;padding-top: 3px;">
+                        TOTAL
+                        <table>
+                            <tr>
+                                <td style="text-align: center;font-weight: bold;">Premi</td>
+                                <td style="text-align: center;font-weight: bold;">Target</td>
+                                <td style="text-align: center;font-weight: bold;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </thead>
+            {%for a in brisurf_sya %}
+            {% load humanize %}
+            <tbody>
+                <tr style="color: black;border-right: 4px solid white;padding-top: 3px;">
+                    <td style="text-align: center;">{{a.branchName}}</td>
+                    {%for b in branch_brisurf_sya%}
+                    {% if a.branchName == b.branchName%}
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ b.premi_brisurf |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    {%endif%}
+                    {%endfor%}
+                    {%for c in branch_non_brisurf_sya%}
+                    {% if a.branchName == c.branchName%}
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ c.premi_non_brisurf |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                    {%endif%}
+                    {%endfor%}
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="text-align: center;padding-left: 4px;">{{ a.ritel_mikro |floatformat:0 |  intcomma  }}</td>
+                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;">%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            {%endfor%}
+        </table>
+    
+        <table>
+            <tr style="background: rgb(3, 15, 119);color: white;font-weight: bold;padding: 3px;">
+                <td style="text-align: center;">TOTAL</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{ sum_ritel |floatformat:0 |  intcomma  }}</td>
+                            <td style="text-align: center;font-weight: bold;">Target</td>
+                            <td style="text-align: center;font-weight: bold;">%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{ sum_mikro |floatformat:0 |  intcomma  }}</td>
+                            <td style="text-align: center;font-weight: bold;">Target</td>
+                            <td style="text-align: center;font-weight: bold;">%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="text-align: center;font-weight: bold;padding-top: 3px;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;font-weight: bold;">{{ sum_ritel_mikro |floatformat:0 |  intcomma  }}</td>
+                            <td style="text-align: center;font-weight: bold;">Target</td>
+                            <td style="text-align: center;font-weight: bold;">%</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
